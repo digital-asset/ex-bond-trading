@@ -1,0 +1,31 @@
+<!-- 
+Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
+SPDX-License-Identifier: (Apache-2.0 OR BSD-3-Clause) 
+-->
+
+<configuration>
+    <!--<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+        <!--<layout class="ch.qos.logback.classic.PatternLayout">-->
+            <!--<Pattern>-->
+                <!--%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n-->
+            <!--</Pattern>-->
+        <!--</layout>-->
+    <!--</appender>-->
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/apps.log</file>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<logger name="com.digitalasset.examples.bondTrading.BondTradingMain" level="DEBUG"/>-->
+    <!--<logger name="com.digitalasset.examples.bondTrading.processor.EventProcessor" level="DEBUG"/>-->
+    <!--<logger name="com.digitalasset.examples.bondTrading.processor.MarketSetupProcessor" level="DEBUG"/>-->
+    <!--<logger name="com.digitalasset.examples.bondTrading.processor.TradingPartyProcessor" level="DEBUG"/>-->
+    <!--<logger name="com.digitalasset.examples.bondTrading.processor.TradeInjector" level="DEBUG"/>-->
+    <root level="INFO">
+        <!--<appender-ref ref="STDOUT"/>-->
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

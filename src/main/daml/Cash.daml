@@ -1,0 +1,157 @@
+-- Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
+-- SPDX-License-Identifier: (Apache-2.0 OR BSD-3-Clause)
+
+daml 1.2
+module Cash where
+
+import DA.Optional
+import DA.Action
+
+isLocked : Cash -> Bool
+isLocked this = this.owner /= this.locker
+
+assertUnlocked : Cash -> Update ()
+assertUnlocked this = whenSome this.lockMaturity assertAfter
+
+type CashId = ContractId Cash
+
+template Cash
+  with
+    issuer : Party
+    owner : Party
+    currency : Text
+    amount : Decimal
+    locker : Party
+    lockMaturity : Optional Time
+  where
+    signatory issuer, owner
+
+    ensure amount > 0.0
+
+    controller owner can
+      Transfer : CashTransferRequestId
+        with newOwner : Party
+        do
+          when (locker /= newOwner) $ assertUnlocked this
+          create CashTransferRequest with newOwner = newOwner; ..
+
+      Split : (CashId, CashId)
+        with splitAmount : Decimal
+        do
+          f <- create this with amount = splitAmount
+          s <- create this with amount = amount - splitAmount
+          return (f, s)
+
+      Merge : CashId
+        with otherCid : CashId
+        do
+          assertUnlocked this
+          c <- fetch otherCid
+          assertUnlocked c
+          assert $ this == c with amount
+          exercise otherCid Archive
+          create this with amount = amount + c.amount
+
+      Lock : CashId
+        with _locker : Party
+             _lockMaturity : Time
+        do
+          assertUnlocked this
+          create this with locker = arg._locker; lockMaturity = Some arg._lockMaturity
+
+type CashTransferRequestId = ContractId CashTransferRequest
+
+template CashTransferRequest
+  with
+    issuer : Party
+    owner : Party
+    newOwner : Party
+    currency : Text
+    amount : Decimal
+    locker : Party
+    lockMaturity : Optional Time
+  where
+    signatory issuer, owner
+
+    controller newOwner can
+      Accept : CashId
+        do
+          create Cash with owner = newOwner, locker = newOwner, lockMaturity = None, ..
+
+      Reject : CashId
+        do
+          create Cash with lockMaturity = None, ..
+
+    controller owner can
+      Withdraw : CashId
+        do
+          whenSome lockMaturity assertAfter
+          create Cash with lockMaturity = None, ..
+
+
+cashSplitMay : Party -> CashId -> Decimal -> Update (CashId, Optional CashId)
+cashSplitMay owner cashCid splitAmount = do
+  cash <- fetch cashCid
+  assert $ cash.owner == owner
+  if cash.amount == splitAmount
+    then return (cashCid, None)
+    else do
+      r <- exercise cashCid Split with splitAmount
+      return (fst r, Some $ snd r)
+
+main = scenario do
+  acmeBank <- getParty "AcmeBank"
+  alice <- getParty "Alice"
+  bob <- getParty "Bob"
+
+  cashAlice1Cid <-
+    submit acmeBank do create CashTransferRequest with
+                              issuer = acmeBank
+                              owner = acmeBank
+                              newOwner = alice
+                              currency = "USD"
+                              amount = 100.0
+                              locker = acmeBank
+                              lockMaturity = None
+
+  cashAlice1Cid <-
+    submit alice do exercise cashAlice1Cid Accept
+
+  cashBob1Cid <-
+    submit acmeBank do create CashTransferRequest with
+                              issuer = acmeBank
+                              owner = acmeBank
+                              newOwner = bob
+                              currency = "USD"
+                              amount = 20.0
+                              locker = acmeBank
+                              lockMaturity = None
+
+  cashBob1Cid <-
+    submit bob do exercise cashBob1Cid Accept
+
+  (cashAlice1Cid, cashAlice2Cid) <-
+    submit alice do exercise cashAlice1Cid Split with splitAmount = 30.0
+
+  cashBob2Cid <-
+    submit alice do exercise cashAlice1Cid Transfer with newOwner = bob
+
+  cashBob2Cid <-
+    submit bob do exercise cashBob2Cid Accept
+
+  cashBob2Cid <-
+    submit bob do exercise cashBob1Cid Merge with otherCid = cashBob2Cid
+
+  submit alice do
+    c <- fetch cashAlice2Cid
+    assertMsg "unexpected issuer" $ c.issuer == acmeBank
+    assertMsg "unexpected owner" $ c.owner == alice
+    assertMsg "unexpected currency" $ c.currency == "USD"
+    assertMsg "unexpected amount" $ c.amount == 70.0
+
+  submit bob do
+    c <- fetch cashBob2Cid
+    assertMsg "unexpected issuer" $ c.issuer == acmeBank
+    assertMsg "unexpected owner" $ c.owner == bob
+    assertMsg "unexpected currency" $ c.currency == "USD"
+    assertMsg "unexpected amount" $ c.amount == 50.0

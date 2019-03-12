@@ -1,0 +1,5 @@
+party,assetName,symbol,amount
+Alice,Cash,USD,1000000
+Bob,Bond,US-000402625-0,1000000
+Bob,Cash,USD,100000
+Alice,Bond,US-002635118-0,100000

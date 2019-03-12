@@ -1,0 +1,2 @@
+buyer,seller,bondIssuer,bondIsin,bondAmount,cashIssuer,cashCurrency,cashAmount,dvpId
+Alice,Bob,Bank,US-000402625-0,100000,Bank,USD,1000000,TR-1001

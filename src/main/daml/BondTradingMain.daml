@@ -1,0 +1,14 @@
+
+-- Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
+-- SPDX-License-Identifier: (Apache-2.0 OR BSD-3-Clause)
+
+{-# LANGUAGE PartialTypeSignatures #-}
+
+daml 1.2
+module BondTradingMain where
+
+import Bond()
+import Cash()
+import Dvp()
+import Settlement()
+import Setup()

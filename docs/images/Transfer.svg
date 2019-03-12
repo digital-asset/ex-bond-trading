@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="2039px" height="1211px" viewBox="0 0 2039 1211" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>ForBernhard_AtomicDvPSettlement</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-3.5%" y="-2.6%" width="107.0%" height="105.2%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-3.5%" y="-2.6%" width="107.0%" height="105.2%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <polygon id="path-3" points="31 830 2007 830 2007 1185 31 1185"></polygon>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="1976" height="355" fill="white">
+            <use xlink:href="#path-3"></use>
+        </mask>
+        <polygon id="path-5" points="31 30 2007 30 2007 385 31 385"></polygon>
+        <mask id="mask-6" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="1976" height="355" fill="white">
+            <use xlink:href="#path-5"></use>
+        </mask>
+        <filter x="-11.7%" y="-11.7%" width="123.4%" height="123.4%" filterUnits="objectBoundingBox" id="filter-7">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-11.7%" y="-11.7%" width="123.4%" height="123.4%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-8.1%" y="-11.4%" width="117.7%" height="125.0%" filterUnits="objectBoundingBox" id="filter-9">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <path d="M4,-2.14068585e-13 L77.6309965,3.09352544e-12 C79.8401355,3.18730088e-12 81.6309965,1.790861 81.6309965,4 L81.6309965,13.7875786 L248,13.7875786 L248,176 L2.84217094e-14,176 L-1.55875313e-13,4 C-1.56145854e-13,1.790861 1.790861,-3.9749812e-13 4,-3.97903932e-13 Z" id="path-10"></path>
+        <filter x="-3.2%" y="-4.5%" width="108.1%" height="111.4%" filterUnits="objectBoundingBox" id="filter-11">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <filter x="-8.1%" y="-11.4%" width="117.7%" height="125.0%" filterUnits="objectBoundingBox" id="filter-12">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <path d="M4,-2.14068585e-13 L77.6309965,3.09352544e-12 C79.8401355,3.18730088e-12 81.6309965,1.790861 81.6309965,4 L81.6309965,13.7875786 L248,13.7875786 L248,176 L-2.7000624e-12,176 L-2.88391533e-12,4 C-2.88418587e-12,1.790861 1.790861,-3.9749812e-13 4,-3.97903932e-13 Z" id="path-13"></path>
+        <filter x="-3.2%" y="-4.5%" width="108.1%" height="111.4%" filterUnits="objectBoundingBox" id="filter-14">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <filter x="-4.5%" y="-4.5%" width="108.9%" height="108.9%" filterUnits="objectBoundingBox" id="filter-15">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="ForBernhard_AtomicDvPSettlement" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#FFFFFF" x="0" y="0" width="2039" height="1211"></rect>
+        <g id="Group-8" filter="url(#filter-1)" transform="translate(82.000000, 277.000000)">
+            <polygon id="Path" stroke="#282768" fill="#FFFFFF" points="485 657.511313 3.2471803e-12 657.511313 2.00889028e-12 1.70530257e-13 220.024196 1.70530257e-13 220.024196 170.348008 485 170.348008"></polygon>
+            <rect id="Rectangle" stroke="#282768" x="40" y="396" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" x="135" y="396" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" x="40.2074823" y="219.511951" width="43.8926198" height="43.8926198"></rect>
+            <rect id="Rectangle" stroke="#282768" x="135.297191" y="219.511951" width="43.8926198" height="43.8926198"></rect>
+            <rect id="Rectangle" stroke="#282768" x="40.2074823" y="127.511951" width="43.8926198" height="43.8926198"></rect>
+            <rect id="Rectangle" stroke="#282768" x="135.297191" y="127.511951" width="43.8926198" height="43.8926198"></rect>
+            <rect id="Rectangle" stroke="#282768" x="40.2074823" y="38.5119512" width="43.8926198" height="43.8926198"></rect>
+            <rect id="Rectangle" stroke="#282768" x="135.297191" y="38.5119512" width="43.8926198" height="43.8926198"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="409" y="580" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="323" y="580" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="235" y="580" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="409" y="492" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="323" y="492" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="235" y="492" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="409" y="400" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="323" y="400" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="235" y="400" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="409" y="224" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="323" y="224" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" x="235" y="224" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#282768" x="40" y="488" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" x="135" y="488" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" x="40" y="576" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" x="135" y="576" width="44" height="44"></rect>
+            <text id="CUSTODIAN-/-CSD" font-family="Karla-Bold, Karla" font-size="36" font-weight="bold" line-spacing="51" fill="#282768">
+                <tspan x="92.472" y="338">CUSTODIAN / CSD</tspan>
+            </text>
+        </g>
+        <g id="Group" filter="url(#filter-2)" transform="translate(1470.000000, 277.000000)">
+            <polygon id="Path" stroke="#282768" fill="#FFFFFF" transform="translate(242.500000, 328.755656) scale(-1, 1) translate(-242.500000, -328.755656) " points="485 657.511313 -7.81597009e-14 657.511313 1.26814948e-12 -1.70530257e-13 220.024196 -1.70530257e-13 220.024196 170.348008 485 170.348008"></polygon>
+            <text id="CENTRAL-BANK" font-family="Karla-Bold, Karla" font-size="36" font-weight="bold" line-spacing="51" fill="#282768">
+                <tspan x="112.142" y="338">CENTRAL BANK</tspan>
+            </text>
+            <rect id="Rectangle" stroke="#282768" transform="translate(423.000000, 418.000000) scale(-1, 1) translate(-423.000000, -418.000000) " x="401" y="396" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" transform="translate(328.000000, 418.000000) scale(-1, 1) translate(-328.000000, -418.000000) " x="306" y="396" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" transform="translate(423.000000, 241.000000) scale(-1, 1) translate(-423.000000, -241.000000) " x="401" y="219" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" transform="translate(328.000000, 241.000000) scale(-1, 1) translate(-328.000000, -241.000000) " x="306" y="219" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" transform="translate(423.000000, 149.000000) scale(-1, 1) translate(-423.000000, -149.000000) " x="401" y="127" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" transform="translate(328.000000, 149.000000) scale(-1, 1) translate(-328.000000, -149.000000) " x="306" y="127" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" transform="translate(423.000000, 60.000000) scale(-1, 1) translate(-423.000000, -60.000000) " x="401" y="38" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" transform="translate(328.000000, 60.000000) scale(-1, 1) translate(-328.000000, -60.000000) " x="306" y="38" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(57.500000, 598.500000) scale(-1, 1) translate(-57.500000, -598.500000) " x="39" y="580" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(143.500000, 598.500000) scale(-1, 1) translate(-143.500000, -598.500000) " x="125" y="580" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(231.500000, 598.500000) scale(-1, 1) translate(-231.500000, -598.500000) " x="213" y="580" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(57.500000, 510.500000) scale(-1, 1) translate(-57.500000, -510.500000) " x="39" y="492" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(143.500000, 510.500000) scale(-1, 1) translate(-143.500000, -510.500000) " x="125" y="492" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(231.500000, 510.500000) scale(-1, 1) translate(-231.500000, -510.500000) " x="213" y="492" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(57.500000, 418.500000) scale(-1, 1) translate(-57.500000, -418.500000) " x="39" y="400" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(143.500000, 418.500000) scale(-1, 1) translate(-143.500000, -418.500000) " x="125" y="400" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(231.500000, 418.500000) scale(-1, 1) translate(-231.500000, -418.500000) " x="213" y="400" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(57.500000, 242.500000) scale(-1, 1) translate(-57.500000, -242.500000) " x="39" y="224" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(143.500000, 242.500000) scale(-1, 1) translate(-143.500000, -242.500000) " x="125" y="224" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#41748D" fill="#282768" transform="translate(231.500000, 242.500000) scale(-1, 1) translate(-231.500000, -242.500000) " x="213" y="224" width="37" height="37"></rect>
+            <rect id="Rectangle" stroke="#282768" transform="translate(423.000000, 510.000000) scale(-1, 1) translate(-423.000000, -510.000000) " x="401" y="488" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" transform="translate(328.000000, 510.000000) scale(-1, 1) translate(-328.000000, -510.000000) " x="306" y="488" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" transform="translate(423.000000, 598.000000) scale(-1, 1) translate(-423.000000, -598.000000) " x="401" y="576" width="44" height="44"></rect>
+            <rect id="Rectangle" stroke="#282768" transform="translate(328.000000, 598.000000) scale(-1, 1) translate(-328.000000, -598.000000) " x="306" y="576" width="44" height="44"></rect>
+        </g>
+        <use id="Rectangle" stroke="#282768" mask="url(#mask-4)" stroke-width="4" fill-opacity="0.414515399" fill="#F4F8FC" fill-rule="nonzero" stroke-dasharray="6" xlink:href="#path-3"></use>
+        <use id="Rectangle" stroke="#282768" mask="url(#mask-6)" stroke-width="4" fill-opacity="0.414515399" fill="#F4F8FC" fill-rule="nonzero" stroke-dasharray="6" xlink:href="#path-5"></use>
+        <text id="ALICE" font-family="Karla-Bold, Karla" font-size="36" font-weight="bold" line-spacing="51" fill="#282768">
+            <tspan x="637.816" y="218">ALICE</tspan>
+        </text>
+        <text id="BONDS" font-family="Karla-Bold, Karla" font-size="36" font-weight="bold" line-spacing="51" fill="#282768">
+            <tspan x="607.608" y="1004">BONDS</tspan>
+        </text>
+        <text id="BOB" font-family="Karla-Bold, Karla" font-size="36" font-weight="bold" line-spacing="51" fill="#282768">
+            <tspan x="1318" y="1004">BOB</tspan>
+        </text>
+        <text id="CASH" font-family="Karla-Bold, Karla" font-size="36" font-weight="bold" line-spacing="51" fill="#282768">
+            <tspan x="1293" y="218">CASH</tspan>
+        </text>
+        <g id="Group-7" filter="url(#filter-7)" transform="translate(1137.000000, 927.000000)">
+            <circle id="Oval" stroke="#282768" stroke-width="2" fill="#FFFFFF" fill-rule="nonzero" cx="72.5" cy="72.5" r="72.5"></circle>
+            <g id="baseline-person-24px" transform="translate(24.000000, 16.000000)">
+                <path d="M49.5,49.5 C58.478125,49.5 65.75,42.228125 65.75,33.25 C65.75,24.271875 58.478125,17 49.5,17 C40.521875,17 33.25,24.271875 33.25,33.25 C33.25,42.228125 40.521875,49.5 49.5,49.5 Z M49.5,57.625 C38.653125,57.625 17,63.06875 17,73.875 L17,82 L82,82 L82,73.875 C82,63.06875 60.346875,57.625 49.5,57.625 Z" id="Shape" fill="#282768" fill-rule="nonzero"></path>
+                <polygon id="Path" points="0 0 97 0 97 97 0 97"></polygon>
+            </g>
+        </g>
+        <g id="Group-7" filter="url(#filter-8)" transform="translate(769.000000, 141.000000)">
+            <circle id="Oval" stroke="#282768" stroke-width="2" fill="#FFFFFF" fill-rule="nonzero" cx="72.5" cy="72.5" r="72.5"></circle>
+            <g id="baseline-person-24px" transform="translate(24.000000, 16.000000)">
+                <path d="M49.5,49.5 C58.478125,49.5 65.75,42.228125 65.75,33.25 C65.75,24.271875 58.478125,17 49.5,17 C40.521875,17 33.25,24.271875 33.25,33.25 C33.25,42.228125 40.521875,49.5 49.5,49.5 Z M49.5,57.625 C38.653125,57.625 17,63.06875 17,73.875 L17,82 L82,82 L82,73.875 C82,63.06875 60.346875,57.625 49.5,57.625 Z" id="Shape" fill="#282768" fill-rule="nonzero"></path>
+                <polygon id="Path" points="0 0 97 0 97 97 0 97"></polygon>
+            </g>
+        </g>
+        <g id="Group-4" filter="url(#filter-9)" transform="translate(1009.000000, 120.000000)">
+            <g id="Rectangle" fill-rule="nonzero">
+                <use fill="black" fill-opacity="1" filter="url(#filter-11)" xlink:href="#path-10"></use>
+                <path stroke="#282768" stroke-width="2" d="M1,175 L247,175 L247,14.7875786 L80.6309965,14.7875786 L80.6309965,4 C80.6309965,2.34314575 79.2878507,1 77.6309965,1 L4,1 C2.34314575,1 1,2.34314575 1,4 L1,175 Z" stroke-linejoin="square" fill="#FFFFFF" fill-rule="evenodd"></path>
+            </g>
+            <g id="Group-3" transform="translate(62.862069, 57.862745)">
+                <g id="Group-2" transform="translate(2.131034, 0.000000)">
+                    <rect id="Rectangle" stroke="#282768" stroke-width="2" fill="#282768" fill-rule="nonzero" x="1" y="5.25490196" width="112.593103" height="51.4901961"></rect>
+                    <ellipse id="Oval" stroke="#FFFFFF" stroke-width="2" fill="#FFFFFF" fill-rule="nonzero" cx="57.2965517" cy="31" rx="17.9586207" ry="18.1176471"></ellipse>
+                    <text id="$" font-family="Karla-Bold, Karla" font-size="17" font-weight="bold" line-spacing="51" fill="#282768">
+                        <tspan x="51.4400517" y="16.0588235">$</tspan>
+                    </text>
+                </g>
+                <g id="Group-2" transform="translate(60.680940, 39.538349) rotate(-7.000000) translate(-60.680940, -39.538349) translate(3.180940, 12.538349)">
+                    <rect id="Rectangle" stroke="#FFFFFF" stroke-width="2" fill="#282768" fill-rule="nonzero" x="1" y="1.25490196" width="112.593103" height="51.4901961"></rect>
+                    <ellipse id="Oval" fill="#FFFFFF" fill-rule="nonzero" cx="57.2965517" cy="27" rx="17.9586207" ry="18.1176471"></ellipse>
+                    <text id="$" font-family="Karla-Bold, Karla" font-size="24" font-weight="bold" line-spacing="51" fill="#282768">
+                        <tspan x="49.1388966" y="23">$</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+        <g id="Group-6" filter="url(#filter-12)" transform="translate(769.000000, 911.000000)">
+            <g id="Rectangle" fill-rule="nonzero">
+                <use fill="black" fill-opacity="1" filter="url(#filter-14)" xlink:href="#path-13"></use>
+                <path stroke="#282768" stroke-width="2" d="M1,175 L247,175 L247,14.7875786 L80.6309965,14.7875786 L80.6309965,4 C80.6309965,2.34314575 79.2878507,1 77.6309965,1 L4,1 C2.34314575,1 1,2.34314575 1,4 L1,175 Z" stroke-linejoin="square" fill="#FFFFFF" fill-rule="evenodd"></path>
+            </g>
+            <g id="Group-5" transform="translate(80.386207, 48.313725)" stroke-width="2">
+                <rect id="Rectangle" stroke="#282768" fill="#282768" x="0" y="0" width="78.6758621" height="89.7254902"></rect>
+                <rect id="Rectangle" stroke="#FFFFFF" fill="#282768" x="10.262069" y="10.3529412" width="78.6758621" height="89.7254902"></rect>
+                <path d="M34.2068966,27.6078431 L75.2551724,27.6078431" id="Path" stroke="#FFFFFF"></path>
+                <path d="M23.9448276,38.9960784 L78.6758621,38.9960784" id="Path" stroke="#FFFFFF"></path>
+                <path d="M23.9448276,50.3843137 L78.6758621,50.3843137" id="Path" stroke="#FFFFFF"></path>
+                <path d="M23.9448276,61.772549 L78.6758621,61.772549" id="Path" stroke="#FFFFFF"></path>
+                <path d="M23.9448276,73.1607843 L78.6758621,73.1607843" id="Path" stroke="#FFFFFF"></path>
+                <path d="M23.9448276,84.5490196 L78.6758621,84.5490196" id="Path" stroke="#FFFFFF"></path>
+            </g>
+        </g>
+        <g id="Group-9" filter="url(#filter-15)" transform="translate(840.000000, 427.000000)">
+            <g id="baseline-new_releases-24px">
+                <polygon id="Path" points="0 0 358 0 358 358 0 358"></polygon>
+                <polygon id="Shape" stroke="#6687FF" stroke-width="5" fill="#FFFFFF" fill-rule="nonzero" points="344 179.925466 307.510909 138.484472 312.595455 83.6273292 258.609545 71.4037267 230.345455 24 179.5 45.7639752 128.654545 24 100.390455 71.4037267 46.4045455 83.4782609 51.4890909 138.335404 15 179.925466 51.4890909 221.36646 46.4045455 276.372671 100.390455 288.596273 128.654545 336 179.5 314.086957 230.345455 335.850932 258.609545 288.447205 312.595455 276.223602 307.510909 221.36646"></polygon>
+            </g>
+            <ellipse id="Oval" stroke="#6687FF" stroke-width="2" fill-rule="nonzero" transform="translate(178.500000, 182.500000) rotate(-45.000000) translate(-178.500000, -182.500000) " cx="178.5" cy="182.5" rx="112.5" ry="43.5"></ellipse>
+            <ellipse id="Oval" stroke="#6687FF" stroke-width="2" fill-rule="nonzero" transform="translate(178.500000, 182.500000) rotate(-90.000000) translate(-178.500000, -182.500000) " cx="178.5" cy="182.5" rx="112.5" ry="43.5"></ellipse>
+            <ellipse id="Oval" stroke="#6687FF" stroke-width="2" fill-rule="nonzero" transform="translate(178.500000, 182.500000) scale(-1, 1) rotate(-45.000000) translate(-178.500000, -182.500000) " cx="178.5" cy="182.5" rx="112.5" ry="43.5"></ellipse>
+            <ellipse id="Oval" stroke="#6687FF" stroke-width="2" fill="#FFFFFF" fill-rule="nonzero" cx="178.5" cy="182.5" rx="112.5" ry="43.5"></ellipse>
+            <text id="ATOMIC" font-family="Karla-Bold, Karla" font-size="36" font-weight="bold" line-spacing="51" fill="#6687FF">
+                <tspan x="114.556" y="189">ATOMIC</tspan>
+            </text>
+        </g>
+        <path d="M772,260 C618.75453,301.334377 506,441.106556 506,607.170959 C506,753.036429 592.993318,878.616703 718.008006,935.019807 C734.929699,942.654398 752.548006,949.021546 770.74148,954" id="Oval" stroke="#6687FF" stroke-width="3" fill-rule="nonzero"></path>
+        <path d="M1534,257 C1374.69783,294.020232 1256,436.823342 1256,607.340913 C1256,753.242009 1342.90037,878.852954 1467.78148,935.269834 C1481.20147,941.332513 1495.06007,946.596132 1509.29657,951" id="Oval" stroke="#6687FF" stroke-width="3" fill-rule="nonzero" transform="translate(1395.000000, 604.000000) scale(-1, 1) translate(-1395.000000, -604.000000) "></path>
+        <polygon id="Triangle" fill="#6687FF" fill-rule="nonzero" transform="translate(766.119426, 261.605995) rotate(74.000000) translate(-766.119426, -261.605995) " points="766.119426 241.605995 776.619426 281.605995 755.619426 281.605995"></polygon>
+        <polygon id="Triangle" fill="#6687FF" fill-rule="nonzero" transform="translate(1285.119426, 947.605995) scale(-1, -1) rotate(74.000000) translate(-1285.119426, -947.605995) " points="1285.11943 927.605995 1295.61943 967.605995 1274.61943 967.605995"></polygon>
+    </g>
+</svg>

@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+# Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
+# SPDX-License-Identifier: (Apache-2.0 OR BSD-3-Clause)
+
+BASE=$(dirname $0)/..
+VERSION=1.0
+
+APP_JAR=$BASE/lib/ex-bond-trading-${VERSION}.jar
+
+TRADE_FILE=${1:-data/BondTrading10.csv}
+SETUP_FILE=${2:-data/SingleAssets.csv}
+
+export LINES=$(tput lines)
+
+runSb() {
+  da start navigator
+}
+
+APP_PIDS=""
+
+CSI="\033["
+let viewport=$(tput lines)-2
+let cmd=${viewport}+1
+let status=cmd+1
+
+runApp () {
+  java -jar $APP_JAR --port 7600 $@
+}
+
+runBackground() {
+  java -jar $APP_JAR --port 7600 $@ &
+  APP_PIDS="$APP_PIDS $!"
+}
+
+stop() {
+# terminate all the apps and the sandbox
+  printf "${CSI}2J${CSI}1;$(tput lines)r"  # reset screen scroll
+  echo Stopping applications...
+  kill $APP_PIDS
+  sleep 2
+  da stop
+  exit 0
+}
+
+# start the sandbox
+
+runSb
+
+# Clear screen and set the scroll area
+printf "${CSI}2J${CSI}1;${viewport}r"
+
+runBackground --color yellow --scrollAt $viewport runSettlement Alice
+runBackground --color green --scrollAt $viewport runSettlement Bob
+
+runApp --scrollAt $viewport marketSetup $SETUP_FILE &
+runApp --color blue --scrollAt $viewport injectTrades --delay 1000 Alice $TRADE_FILE &
+runApp --color blue --scrollAt $viewport injectTrades --delay 1000 Bob $TRADE_FILE &
+
+trap stop 1 2 3 15
+
+cmdpre="${CSI}${cmd};1H${CSI}2K"
+
+printf "$cmdpre"
+while read -p "Running, [S]top > " line
+do
+  case $line in
+  stop|s|S) break ;;
+  *) ;;
+  esac
+  printf "$cmdpre"
+done
+
+stop
+
+
+
