@@ -4,7 +4,7 @@ Bond trading
 ::
 
   Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
-  SPDX-License-Identifier: (Apache-2.0 OR BSD-3-Clause)
+  SPDX-License-Identifier: Apache-2.0
 
 This is an example of trading bonds against cash. It covers how this process can be modeled in DAML, and how it can be automated with the Java Application Framework.
 
