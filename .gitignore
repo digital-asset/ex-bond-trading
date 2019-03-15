@@ -1,14 +1,22 @@
 # Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-.idea/
-*.iml
 **/.DS_Store
-.vscode/settings.json
-logs/
-target/
-sqlite/
-lib/
+*.iml
 *.log
-navigator.history
+.idea/
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 .navigator.conf
+.vscode/settings.json
+buildNumber.properties
+dependency-reduced-pom.xml
+lib/
+logs/
+navigator.history
+pom.xml.next
+pom.xml.releaseBackup
+pom.xml.tag
+pom.xml.versionsBackup
+release.properties
+sqlite/
