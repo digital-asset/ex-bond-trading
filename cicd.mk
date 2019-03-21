@@ -27,7 +27,7 @@ sdk_version ?= $(shell cat da.yaml | grep sdk-version | tr -d ' ' | cut -d':' -f
 damlc ?= docker run --rm \
 	-v $(PWD):/usr/src/ \
 	-w /usr/src \
-	digitalasset/sdk:$(sdk_version)-master da run damlc --
+	digitalasset/daml-sdk:$(sdk_version)-master da run damlc --
 
 # results
 dar_test_result := target/DarTests.out
@@ -42,7 +42,7 @@ damlsrc := src/main/daml
 test-dar: $(dar_test_result)
 
 # TODO - move to junit files when new version of SDK comes out
-$(dar_test_result): $(shell find $(damlsrc) -type f)
+$(dar_test_result): $(shell find $(damlsrc) -type f) da.yaml
 	@echo test triggered because these files changed: $?
 	$(damlc) test $(damlsrc)/Test.daml | tee $@
 

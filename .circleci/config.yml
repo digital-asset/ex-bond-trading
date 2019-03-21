@@ -69,9 +69,9 @@ jobs:
           command: mkdir -pv ~/test-results/integration
       - store_test_results:
           path: ~/test-results
+
 workflows:
-  version: 2
-  build-test-and-deploy:
+  Build and test:
     jobs:
       - application
       - daml
