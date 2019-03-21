@@ -1,0 +1,17 @@
+# Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
+# SPDX-License-Identifier: (Apache-2.0 OR BSD-3-Clause)
+version: 2.1
+
+jobs:
+  stub:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - run:
+          name: Stub
+          command: echo '[STUB] lets build some stuff!'
+
+workflows:
+  stub:
+    jobs:
+      - stub
