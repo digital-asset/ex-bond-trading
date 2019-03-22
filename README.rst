@@ -1,10 +1,7 @@
 Bond trading
 ############
-
-::
-
-  Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
-  SPDX-License-Identifier: Apache-2.0
+.. image:: https://circleci.com/gh/digital-asset/ex-bond-trading.svg?style=svg
+    :target: https://circleci.com/gh/digital-asset/ex-bond-trading
 
 This is an example of trading bonds against cash. It covers how this process can be modeled in DAML, and how it can be automated with the Java Application Framework.
 
@@ -20,7 +17,7 @@ In the documentation for this example
 Building the system
 *******************
 
-All needed binaries can be built with Maven and the provided pom.xml_ and Makefile_. 
+All needed binaries can be built with Maven and the provided pom.xml_ and Makefile_.
 
 #. ``cd`` to the root directory.
 #. Type ``make build``. This will create a ``lib`` folder and application JAR files.
@@ -28,13 +25,13 @@ All needed binaries can be built with Maven and the provided pom.xml_ and Makefi
 Running the system
 ******************
 
-Once the application JAR is built, the provided start script will run the Sandbox, Navigator and all needed automation processes. 
+Once the application JAR is built, the provided start script will run the Sandbox, Navigator and all needed automation processes.
 
 To run the application:
 
 #. Open a terminal window and navigate to the ``code`` folder.
 #. Type ``./scripts/start`` at the prompt.
-   
+
 This runs the sandbox, navigator and automation_, and opens navigator, which you can use to explore the ledger.
 
 The script injects trades, and sends progress output to the terminal. It also puts a prompt at the screen bottom which lets you stop the system.
@@ -50,3 +47,10 @@ After running, your screen should look like this:
 .. _Automation implementation: docs/04-automation-implementation.rst
 .. _automation: docs/04-automation-implementation.rst
 .. _Makefile: code/Makefile
+
+License
+*******
+::
+
+  Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
+  SPDX-License-Identifier: Apache-2.0
