@@ -152,7 +152,7 @@ public class BondTradingMain {
             return false;
         }
 
-        return true;
+        return false;
     }
 
     // Pre and post- string to outout around progress lines.
