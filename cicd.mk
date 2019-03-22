@@ -7,7 +7,7 @@ SHELL := /usr/bin/env bash
 ######
 
 .PHONY: all
-all: build test package
+all: build test
 
 .PHONY: build
 build: build-dar build-app
@@ -106,24 +106,6 @@ $(app_test_result): $(app_build_result)
 
 .PHONY: test-integration
 test-integration:
-	@echo "make target $@ is not implemented"
-
-
-##########
-# package
-##########
-
-.PHONY: package
-package:
-	@echo "make target $@ is not implemented"
-
-
-##########
-# release
-##########
-
-.PHONY: release
-release:
 	@echo "make target $@ is not implemented"
 
 
