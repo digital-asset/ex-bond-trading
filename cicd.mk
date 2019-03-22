@@ -30,7 +30,7 @@ damlc ?= docker run --rm \
 	digitalasset/daml-sdk:$(sdk_version)-master da run damlc --
 
 # results
-dar_test_result := target/DarTests.out
+dar_test_result := target/DarTests.xml
 dar_build_result := target/BondTradingMain.dar
 
 # source
@@ -44,7 +44,7 @@ test-dar: $(dar_test_result)
 # TODO - move to junit files when new version of SDK comes out
 $(dar_test_result): $(shell find $(damlsrc) -type f) da.yaml
 	@echo test triggered because these files changed: $?
-	$(damlc) test $(damlsrc)/Test.daml | tee $@
+	$(damlc) test --junit $@ $(damlsrc)/Test.daml
 
 
 # dar build
