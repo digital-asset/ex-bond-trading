@@ -1,0 +1,81 @@
+# Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
+# SPDX-License-Identifier: (Apache-2.0 OR BSD-3-Clause)
+version: 2.1
+
+jobs:
+  application:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    environment:
+      MAVEN_OPTS: -Xmx3200m
+      #This var is used by the makefile makefile.
+      mvn: mvn
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - m2-{{ checksum "pom.xml" }}
+            - m2
+      - run:
+          name: Build Application
+          command: make -f cicd.mk build-app
+      - run:
+          name: Test Application
+          command: make -f cicd.mk test-app
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: m2-{{ checksum "pom.xml" }}
+      - run:
+          name: Save test results
+          command: |
+            mkdir -pv ~/test-results/junit
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+  daml:
+    docker:
+      - image: digitalasset/daml-sdk:0.11.19-circleci-master
+    environment:
+      #This var is used by the makefile makefile.
+      damlc: da run damlc --
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Test Dar
+          command: make -f cicd.mk test-dar
+      - run:
+          name: Build Dar
+          command: make -f cicd.mk build-dar
+      - run:
+          name: Save test results
+          command: |
+            mkdir -pv ~/test-results/daml
+            find . -type f -regex ".*/target/.*DarTests.xml" -exec cp {} ~/test-results/daml/ \;
+      - store_test_results:
+          path: ~/test-results
+  integration-test:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout
+      - run:
+          name: Test all the things.
+          command: echo '[STUB] test some things'
+      - run:
+          name: Save test results
+          command: mkdir -pv ~/test-results/integration
+      - store_test_results:
+          path: ~/test-results
+
+workflows:
+  Build and test:
+    jobs:
+      - application
+      - daml
+      - integration-test:
+          requires:
+            - application
+            - daml

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 project:
-  sdk-version: 0.11.14
+  sdk-version: 0.11.19
   name: ex-bond-trading
   source: src/main/daml/BondTradingMain.daml
   parties:

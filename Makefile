@@ -15,7 +15,7 @@ APP_JAR=lib/$(APP_JAR_NAME)
 build: app
 
 clean:
-	rm -rf target lib
+	rm -vrf target/* lib
 
 app: $(APP_JAR)
 
