@@ -2,6 +2,14 @@ SHELL := /usr/bin/env bash
 .SHELLFLAGS := -euo pipefail -c
 
 
+# force docker builders - useful for makefile development
+ifneq ($(FORCE_DOCKER),true)
+	local_da := $(shell which da)
+	local_mvn := $(shell which mvn)
+endif
+
+
+
 ######
 # all
 ######
@@ -22,12 +30,17 @@ test: test-dar test-app test-integration
 
 # test -> build
 
-# damlc command
+# damlc command - use docker or local
+damlc_cmd := da run damlc --
+
 sdk_version ?= $(shell cat da.yaml | grep sdk-version | tr -d ' ' | cut -d':' -f2)
-damlc ?= docker run --rm \
+damlc_docker_cmd := \
+	docker run --rm \
 	-v $(PWD):/usr/src/ \
 	-w /usr/src \
-	digitalasset/daml-sdk:$(sdk_version)-master da run damlc --
+	digitalasset/daml-sdk:$(sdk_version)-master $(damlc_cmd)
+
+damlc := $(if $(local_da), $(damlc_cmd), $(damlc_docker_cmd))
 
 # results
 dar_test_result := target/DarTests.xml
@@ -62,17 +75,22 @@ $(dar_build_result): $(dar_test_result)
 
 # build -> test
 
-# maven command
+# maven command - use docker or local
+mvn_cmd := mvn
+
 mvn_version ?= 3.6-jdk-8
-mvn ?= docker run --rm \
-		-u $$(id -u):$$(id -g) \
-		-e MAVEN_CONFIG=/var/maven/.m2 \
-		-v $(HOME)/.m2:/var/maven/.m2 \
-		-v $(PWD):/usr/src/ \
-		-w /usr/src \
-		maven:$(mvn_version) mvn \
-			-Duser.home=/var/maven \
-			--global-settings /var/maven/.m2/settings.xml
+mvn_docker_cmd := \
+	docker run --rm \
+	-u $$(id -u):$$(id -g) \
+	-e MAVEN_CONFIG=/var/maven/.m2 \
+	-v $(HOME)/.m2:/var/maven/.m2 \
+	-v $(PWD):/usr/src/ \
+	-w /usr/src \
+	maven:$(mvn_version) $(mvn_cmd) \
+		-Duser.home=/var/maven \
+		--global-settings /var/maven/.m2/settings.xml
+
+mvn := $(if $(local_mvn), $(mvn_cmd), $(mvn_docker_cmd))
 
 # results
 app_build_result := target/ex-bond-trading-1.0.jar
