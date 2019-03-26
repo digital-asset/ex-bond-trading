@@ -1,6 +1,8 @@
 SHELL := /usr/bin/env bash
 .SHELLFLAGS := -euo pipefail -c
 
+# application version
+VERSION ?= 1.0
 
 # force docker builders - useful for makefile development
 ifneq ($(FORCE_DOCKER),true)
@@ -93,7 +95,7 @@ mvn_docker_cmd := \
 mvn := $(if $(local_mvn), $(mvn_cmd), $(mvn_docker_cmd))
 
 # results
-app_build_result := target/ex-bond-trading-1.0.jar
+app_build_result := target/ex-bond-trading-$(VERSION).jar
 app_test_result := target/surefire-reports/TEST-com.digitalasset.examples.bondTrading.TradingPartyProcessorTests.xml
 
 # source
@@ -125,6 +127,15 @@ $(app_test_result): $(app_build_result)
 .PHONY: test-integration
 test-integration:
 	@echo "make target $@ is not implemented"
+
+
+########################
+# start the application
+########################
+
+.PHONY: start
+start: all
+	./scripts/start
 
 
 ########

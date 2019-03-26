@@ -9,4 +9,5 @@ project:
   - Bank
   - Alice
   - Bob
+update-setting: Never
 version: 2
