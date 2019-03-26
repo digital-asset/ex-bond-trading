@@ -17,10 +17,12 @@ In the documentation for this example
 Building the system
 *******************
 
-All needed binaries can be built with Maven and the provided pom.xml_ and Makefile_.
+All needed binaries can be built with the provided pom.xml_ and Makefile_.
 
 #. ``cd`` to the root directory.
-#. Type ``make build``. This will create a ``lib`` folder and application JAR files.
+#. Type ``make``.
+
+If you have Maven and the DAML SDK installed locally, those will be used, or else the build will take place within docker container builders (requires docker).  You can force the use of docker by typing ``export FORCE_DOCKER=true`` in your shell before running any ``make`` targets.
 
 Running the system
 ******************
@@ -29,10 +31,9 @@ Once the application JAR is built, the provided start script will run the Sandbo
 
 To run the application:
 
-#. Open a terminal window and navigate to the ``code`` folder.
-#. Type ``./scripts/start`` at the prompt.
+#. Type ``make start``.
 
-This runs the sandbox, navigator and automation_, and opens navigator, which you can use to explore the ledger.
+This runs the sandbox, navigator and automation_, and if you have the DAML SDK installed locally opens navigator, which you can use to explore the ledger.
 
 The script injects trades, and sends progress output to the terminal. It also puts a prompt at the screen bottom which lets you stop the system.
 
