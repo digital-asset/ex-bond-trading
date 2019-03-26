@@ -1,29 +1,150 @@
 # Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-VERSION=1.0
-APP_NAME=ex-bond-trading-$(VERSION)
-SRC_HOME=src/main/java/com/digitalasset/examples/bondTrading
-JAVA_SRC=$(SRC_HOME)/*.java $(SRC_HOME)/processor/*.java
-JAVA_RESOURCES=src/main/resources/*
-DAML_SRC=src/main/daml/*.daml
-DAML_MAIN=src/main/daml/BondTradingMain.daml
+SHELL := /usr/bin/env bash
+.SHELLFLAGS := -euo pipefail -c
 
-APP_JAR_NAME=$(APP_NAME).jar
-APP_JAR=lib/$(APP_JAR_NAME)
+# application version
+VERSION ?= 1.0
 
-build: app
+# force docker builders - useful for makefile development
+ifneq ($(FORCE_DOCKER),true)
+	local_da := $(shell which da)
+	local_mvn := $(shell which mvn)
+endif
 
+
+
+######
+# all
+######
+
+.PHONY: all
+all: build test
+
+.PHONY: build
+build: build-dar build-app
+
+.PHONY: test
+test: test-dar test-app test-integration
+
+
+################
+# dar pipeline
+################
+
+# test -> build
+
+# damlc command - use docker or local
+damlc_cmd := da run damlc --
+
+sdk_version ?= $(shell cat da.yaml | grep sdk-version | tr -d ' ' | cut -d':' -f2)
+damlc_docker_cmd := \
+	docker run --rm \
+	-v $(PWD):/usr/src/ \
+	-w /usr/src \
+	digitalasset/daml-sdk:$(sdk_version)-master $(damlc_cmd)
+
+damlc := $(if $(local_da), $(damlc_cmd), $(damlc_docker_cmd))
+
+# results
+dar_test_result := target/DarTests.xml
+dar_build_result := target/BondTradingMain.dar
+
+# source
+damlsrc := src/main/daml
+
+
+# dar test
+.PHONY: test-dar
+test-dar: $(dar_test_result)
+
+# TODO - move to junit files when new version of SDK comes out
+$(dar_test_result): $(shell find $(damlsrc) -type f) da.yaml
+	@echo test triggered because these files changed: $?
+	$(damlc) test --junit $@ $(damlsrc)/Test.daml
+
+
+# dar build
+.PHONY: build-dar
+build-dar: $(dar_build_result)
+
+$(dar_build_result): $(dar_test_result)
+	@echo build triggered because these files changed: $?
+	$(damlc) package $(damlsrc)/$(@F:.dar=.daml) $(basename $@)
+
+
+################
+# app pipeline
+################
+
+# build -> test
+
+# maven command - use docker or local
+mvn_cmd := mvn
+
+mvn_version ?= 3.6-jdk-8
+mvn_docker_cmd := \
+	docker run --rm \
+	-u $$(id -u):$$(id -g) \
+	-e MAVEN_CONFIG=/var/maven/.m2 \
+	-v $(HOME)/.m2:/var/maven/.m2 \
+	-v $(PWD):/usr/src/ \
+	-w /usr/src \
+	maven:$(mvn_version) $(mvn_cmd) \
+		-Duser.home=/var/maven \
+		--global-settings /var/maven/.m2/settings.xml
+
+mvn := $(if $(local_mvn), $(mvn_cmd), $(mvn_docker_cmd))
+
+# results
+app_build_result := target/ex-bond-trading-$(VERSION).jar
+app_test_result := target/surefire-reports/TEST-com.digitalasset.examples.bondTrading.TradingPartyProcessorTests.xml
+
+# source
+appsrc := src/main/java pom.xml
+
+
+# app build
+.PHONY: build-app
+build-app: $(app_build_result)
+
+$(app_build_result): $(shell find $(appsrc) -type f)
+	@echo build triggered because these files changed: $?
+	$(mvn) -DskipTests package
+
+
+# app test
+.PHONY: test-app
+test-app: $(app_test_result)
+
+$(app_test_result): $(app_build_result)
+	@echo test triggered because these files changed: $?
+	$(mvn) test
+
+
+###################
+# integration test
+###################
+
+.PHONY: test-integration
+test-integration:
+	@echo "make target $@ is not implemented"
+
+
+########################
+# start the application
+########################
+
+.PHONY: start
+start: all
+	./scripts/start
+
+
+########
+# clean
+########
+
+.PHONY: clean
 clean:
-	rm -vrf target/* lib
-
-app: $(APP_JAR)
-
-start:
-	sh scripts/start
-
-$(APP_JAR): $(JAVA_SRC) $(JAVA_RESOURCES)
-	mvn package ; \
-	mkdir -p lib ; mv target/$(APP_JAR_NAME) $(APP_JAR); \
-	rm -r dependency-reduced-pom.xml
-
+	-rm -vfr target/*

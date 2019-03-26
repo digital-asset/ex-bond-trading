@@ -16,10 +16,10 @@ jobs:
             - m2
       - run:
           name: Build Application
-          command: make -f cicd.mk build-app
+          command: make build-app
       - run:
           name: Test Application
-          command: make -f cicd.mk test-app
+          command: make test-app
       - save_cache:
           paths:
             - ~/.m2
@@ -40,10 +40,10 @@ jobs:
       - setup_remote_docker
       - run:
           name: Test Dar
-          command: make -f cicd.mk test-dar
+          command: make test-dar
       - run:
           name: Build Dar
-          command: make -f cicd.mk build-dar
+          command: make build-dar
       - run:
           name: Save test results
           command: |
