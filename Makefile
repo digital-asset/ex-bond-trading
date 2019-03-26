@@ -14,7 +14,6 @@ ifneq ($(FORCE_DOCKER),true)
 endif
 
 
-
 ######
 # all
 ######
@@ -40,7 +39,7 @@ damlc_cmd := da run damlc --
 
 sdk_version ?= $(shell cat da.yaml | grep sdk-version | tr -d ' ' | cut -d':' -f2)
 damlc_docker_cmd := \
-	docker run --rm \
+	docker run -t --rm \
 	-v $(PWD):/usr/src/ \
 	-w /usr/src \
 	digitalasset/daml-sdk:$(sdk_version)-master $(damlc_cmd)
@@ -85,7 +84,7 @@ mvn_cmd := mvn
 
 mvn_version ?= 3.6-jdk-8
 mvn_docker_cmd := \
-	docker run --rm \
+	docker run -t --rm \
 	-u $$(id -u):$$(id -g) \
 	-e MAVEN_CONFIG=/var/maven/.m2 \
 	-v $(HOME)/.m2:/var/maven/.m2 \
@@ -129,16 +128,22 @@ $(app_test_result): $(app_build_result)
 
 .PHONY: test-integration
 test-integration:
-	@echo "make target $@ is not implemented"
+	@echo "[STUB] make target $@ is not implemented"
 
 
 ########################
 # start the application
 ########################
 
+docker_runner := \
+	docker run -it --rm \
+	-v $(PWD):/usr/src/ \
+	-w /usr/src \
+	digitalasset/daml-sdk:$(sdk_version)-master
+
 .PHONY: start
 start: all
-	./scripts/start
+	$(if $(local_da),,$(docker_runner)) ./scripts/start
 
 
 ########
