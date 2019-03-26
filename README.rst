@@ -22,7 +22,7 @@ All needed binaries can be built with the provided pom.xml_ and Makefile_.
 #. ``cd`` to the root directory.
 #. Type ``make``.
 
-If you have Maven and the DAML SDK installed locally, those will be used, or else the build will take place within docker container builders (requires docker).  You can force the use of docker by typing ``export FORCE_DOCKER=true`` in your shell before running any ``make`` targets.
+If you have Maven and the DAML SDK installed locally, those will be used with ``make``. If you don't, ``make`` will use docker container builders instead (requires docker_).  If you would like always use docker, despite having these tools locally, simply ``export FORCE_DOCKER=true`` in your shell before running any ``make`` targets. This is useful if you are having troubles building due to a version mismatch of one of the tools, or you would just rather not have to install anything extra.
 
 Running the system
 ******************
@@ -33,7 +33,7 @@ To run the application:
 
 #. Type ``make start``.
 
-This runs the sandbox, navigator and automation_, and if you have the DAML SDK installed locally opens navigator, which you can use to explore the ledger.
+This runs the sandbox, navigator, and automation_. You may navigate to http://localhost:7500/sign-in/ to explore the ledger or this may open for you automatically if the DAML SDK is installed locally.
 
 The script injects trades, and sends progress output to the terminal. It also puts a prompt at the screen bottom which lets you stop the system.
 
@@ -48,6 +48,7 @@ After running, your screen should look like this:
 .. _Automation implementation: docs/04-automation-implementation.rst
 .. _automation: docs/04-automation-implementation.rst
 .. _Makefile: code/Makefile
+.. _docker: https://www.docker.com/get-started
 
 License
 *******

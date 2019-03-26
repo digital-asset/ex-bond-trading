@@ -7,7 +7,7 @@ SHELL := /usr/bin/env bash
 # application version
 VERSION ?= 1.0
 
-# force docker builders - useful for makefile development
+# logic to force use docker builders
 ifneq ($(FORCE_DOCKER),true)
 	local_da := $(shell which da)
 	local_mvn := $(shell which mvn)
@@ -138,6 +138,7 @@ test-integration:
 docker_runner := \
 	docker run -it --rm \
 	-v $(PWD):/usr/src/ \
+	-p 7500:7500 \
 	-w /usr/src \
 	digitalasset/daml-sdk:$(sdk_version)-master
 
