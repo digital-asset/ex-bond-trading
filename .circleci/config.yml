@@ -8,8 +8,6 @@ jobs:
       - image: circleci/openjdk:8-jdk
     environment:
       MAVEN_OPTS: -Xmx3200m
-      #This var is used by the makefile makefile.
-      mvn: mvn
     steps:
       - checkout
       - restore_cache:
@@ -18,10 +16,10 @@ jobs:
             - m2
       - run:
           name: Build Application
-          command: make -f cicd.mk build-app
+          command: make build-app
       - run:
           name: Test Application
-          command: make -f cicd.mk test-app
+          command: make test-app
       - save_cache:
           paths:
             - ~/.m2
@@ -36,19 +34,16 @@ jobs:
           path: ~/test-results
   daml:
     docker:
-      - image: digitalasset/daml-sdk:0.11.19-circleci-master
-    environment:
-      #This var is used by the makefile makefile.
-      damlc: da run damlc --
+      - image: digitalasset/daml-sdk:0.11.24-circleci-master
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Test Dar
-          command: make -f cicd.mk test-dar
+          command: make test-dar
       - run:
           name: Build Dar
-          command: make -f cicd.mk build-dar
+          command: make build-dar
       - run:
           name: Save test results
           command: |

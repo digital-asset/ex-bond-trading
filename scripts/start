@@ -3,10 +3,13 @@
 # Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+set -euo pipefail
+
+
 BASE=$(dirname $0)/..
 VERSION=1.0
 
-APP_JAR=$BASE/lib/ex-bond-trading-${VERSION}.jar
+APP_JAR=$BASE/target/ex-bond-trading-${VERSION}.jar
 
 TRADE_FILE=${1:-data/BondTrading10.csv}
 SETUP_FILE=${2:-data/SingleAssets.csv}
@@ -20,9 +23,9 @@ runSb() {
 APP_PIDS=""
 
 CSI="\033["
-let viewport=$(tput lines)-2
-let cmd=${viewport}+1
-let status=cmd+1
+viewport=$(($(tput lines) - 2))
+cmd=$((viewport + 1))
+status=$((cmd + 1))
 
 runApp () {
   java -jar $APP_JAR --port 7600 $@

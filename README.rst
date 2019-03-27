@@ -17,10 +17,16 @@ In the documentation for this example
 Building the system
 *******************
 
-All needed binaries can be built with Maven and the provided pom.xml_ and Makefile_.
+All needed binaries can be built with the provided pom.xml_ and Makefile_:
 
-#. ``cd`` to the root directory.
-#. Type ``make build``. This will create a ``lib`` folder and application JAR files.
+- ``cd`` to the root directory.
+- Type ``make``.
+
+If you have Maven and the DAML SDK installed locally, those will be used with ``make``. If you do not, ``make`` will use docker container builders instead (requires docker_).  If you prefer to always use docker, despite having these tools locally, simply export the following in your shell:
+
+- ``export FORCE_DOCKER=true``
+
+This is useful if you are having troubles building due to a version mismatch of one of the tools, or you would just rather not have to install anything extra.
 
 Running the system
 ******************
@@ -29,10 +35,9 @@ Once the application JAR is built, the provided start script will run the Sandbo
 
 To run the application:
 
-#. Open a terminal window and navigate to the ``code`` folder.
-#. Type ``./scripts/start`` at the prompt.
+- Type ``make start``.
 
-This runs the sandbox, navigator and automation_, and opens navigator, which you can use to explore the ledger.
+This runs the sandbox, navigator, and automation_. You may navigate to http://localhost:7500/sign-in/ to explore the ledger or this may open for you automatically if the DAML SDK is installed locally.
 
 The script injects trades, and sends progress output to the terminal. It also puts a prompt at the screen bottom which lets you stop the system.
 
@@ -47,6 +52,7 @@ After running, your screen should look like this:
 .. _Automation implementation: docs/04-automation-implementation.rst
 .. _automation: docs/04-automation-implementation.rst
 .. _Makefile: code/Makefile
+.. _docker: https://www.docker.com/get-started
 
 License
 *******
