@@ -69,7 +69,7 @@ Of note here is how the different states of a Dvp flow are represented by differ
 
 2. If the mutable approach was taken, the template variables that changed would probably have values missing in certain states. This would require the use of the ``Optional` type to represent the possibly missing value. By using different types, we can simply add the new variable when the state requires it, eliminating the ``Optional``, and making the implementation simpler.
 
-`See the DvpProposal <../src/main/daml/Cash.daml>`_ and `DvP <../src/main/daml/Dvp.daml#L40-L58>` templates.
+`See the DvpProposal <../src/main/daml/Cash.daml>`_ and `DvP <../src/main/daml/Dvp.daml#L40-L58>`_ templates.
 
 Atomic transfer
 ===============
