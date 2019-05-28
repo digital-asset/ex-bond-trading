@@ -42,11 +42,15 @@ jobs:
           name: Install DAML
           command: |
             curl -sSL https://get.daml.com/ | sh
+            echo $PATH
             PATH=$PATH:/home/circleci/.daml/bin
+            echo $PATH
             daml install project
       - run:
           name: Test Dar
-          command: make test-dar
+          command: |
+            echo $PATH
+            make test-dar
       - run:
           name: Build Dar
           command: make build-dar
