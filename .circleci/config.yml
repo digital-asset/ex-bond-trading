@@ -40,10 +40,10 @@ jobs:
       - setup_remote_docker
       - run:
           name: Install DAML
-          command: curl -sSL https://get.daml.com/ | sh
-      - run:
-          name: Install project SDK version
-          command: daml install project
+          command: |
+            curl -sSL https://get.daml.com/ | sh
+            PATH=$PATH:/home/circleci/.daml/bin
+            daml install project
       - run:
           name: Test Dar
           command: make test-dar
