@@ -530,15 +530,6 @@ public class TradingPartyProcessor extends EventProcessor {
     }
 
     @Override
-    Stream<Command> processExerciseEvent(String workflowId, ExercisedEvent event) {
-
-        log.debug("{} receives an exercise event templateId={}, contractId={}, choice={}",
-            getParty(), event.getTemplateId(),event.getContractId(), event.getChoice()
-        );
-        return Stream.empty();
-    }
-
-    @Override
     Stream<Command> processArchivedEvent(String workflowId, ArchivedEvent event) {
         log.debug("{} receives an archive event templateId={}, contractId={}",
             getParty(),event.getTemplateId(),event.getContractId()

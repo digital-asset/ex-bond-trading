@@ -188,11 +188,6 @@ public class TradeInjector extends EventProcessor {
     }
 
     @Override
-    Stream<Command> processExerciseEvent(String workflowId, EventOuterClass.ExercisedEvent event) {
-        return Stream.empty();
-    }
-
-    @Override
     Stream<Command> processArchivedEvent(String workflowId, EventOuterClass.ArchivedEvent event) {
         return Stream.empty();
     }

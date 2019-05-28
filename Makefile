@@ -7,13 +7,6 @@ SHELL := /usr/bin/env bash
 # application version
 VERSION ?= 1.0
 
-# logic to force use docker builders
-ifneq ($(FORCE_DOCKER),true)
-	local_da := $(shell which da)
-	local_mvn := $(shell which mvn)
-endif
-
-
 ######
 # all
 ######
@@ -34,17 +27,10 @@ test: test-dar test-app test-integration
 
 # test -> build
 
-# damlc command - use docker or local
-damlc_cmd := da run damlc --
+# damlc command
+sdk_version ?= $(shell cat daml.yaml | grep sdk-version | tr -d ' ' | cut -d':' -f2)
 
-sdk_version ?= $(shell cat da.yaml | grep sdk-version | tr -d ' ' | cut -d':' -f2)
-damlc_docker_cmd := \
-	docker run -t --rm \
-	-v $(PWD):/usr/src/ \
-	-w /usr/src \
-	digitalasset/daml-sdk:$(sdk_version)-master $(damlc_cmd)
-
-damlc := $(if $(local_da), $(damlc_cmd), $(damlc_docker_cmd))
+damlc := daml damlc --
 
 # results
 dar_test_result := target/DarTests.xml
@@ -59,7 +45,7 @@ damlsrc := src/main/daml
 test-dar: $(dar_test_result)
 
 # TODO - move to junit files when new version of SDK comes out
-$(dar_test_result): $(shell find $(damlsrc) -type f) da.yaml
+$(dar_test_result): $(shell find $(damlsrc) -type f) daml.yaml
 	@echo test triggered because these files changed: $?
 	$(damlc) test --junit $@ $(damlsrc)/Test.daml
 
@@ -79,23 +65,6 @@ $(dar_build_result): $(dar_test_result)
 
 # build -> test
 
-# maven command - use docker or local
-mvn_cmd := mvn
-
-mvn_version ?= 3.6-jdk-8
-mvn_docker_cmd := \
-	docker run -t --rm \
-	-u $$(id -u):$$(id -g) \
-	-e MAVEN_CONFIG=/var/maven/.m2 \
-	-v $(HOME)/.m2:/var/maven/.m2 \
-	-v $(PWD):/usr/src/ \
-	-w /usr/src \
-	maven:$(mvn_version) $(mvn_cmd) \
-		-Duser.home=/var/maven \
-		--global-settings /var/maven/.m2/settings.xml
-
-mvn := $(if $(local_mvn), $(mvn_cmd), $(mvn_docker_cmd))
-
 # results
 app_build_result := target/ex-bond-trading-$(VERSION).jar
 app_test_result := target/surefire-reports/TEST-com.digitalasset.examples.bondTrading.TradingPartyProcessorTests.xml
@@ -110,7 +79,7 @@ build-app: $(app_build_result)
 
 $(app_build_result): $(shell find $(appsrc) -type f)
 	@echo build triggered because these files changed: $?
-	$(mvn) -DskipTests package
+	mvn -DskipTests package
 
 
 # app test
@@ -119,7 +88,7 @@ test-app: $(app_test_result)
 
 $(app_test_result): $(app_build_result)
 	@echo test triggered because these files changed: $?
-	$(mvn) test
+	mvn test
 
 
 ###################
@@ -135,17 +104,14 @@ test-integration:
 # start the application
 ########################
 
-docker_runner := \
-	docker run -it --rm \
-	-v $(PWD):/usr/src/ \
-	-p 7500:7500 \
-	-w /usr/src \
-	digitalasset/daml-sdk:$(sdk_version)-master
+.PHONY: start-daml
+start-daml:
+	daml sandbox -- $(dar_build_result)&
+	daml navigator server
 
-.PHONY: start
-start: all
-	$(if $(local_da),,$(docker_runner)) ./scripts/start
-
+.PHONY: start-app
+start-app:
+	./scripts/start
 
 ########
 # clean

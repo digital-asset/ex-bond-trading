@@ -58,8 +58,6 @@ template SettlementProcessor
         do
           time <- getTime
 
-          someDate <- pure $ date 2018 May 14
-
           let settleDvp (dvpAllocatedCid: DvpAllocatedId) (prev: SettlementResult) = do
               dvpAllocated <- fetch dvpAllocatedCid
               assertMsg "settlement time is in the future" $ dvpAllocated.c.settleTime <= time

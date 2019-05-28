@@ -89,15 +89,6 @@ public class MarketSetupProcessor extends EventProcessor {
     }
 
     @Override
-    public Stream<Command> processExerciseEvent(String workflowId, EventOuterClass.ExercisedEvent event) {
-
-        switch(identifierToString(event.getTemplateId())) {
-            default:
-                return Stream.empty();
-        }
-    }
-
-    @Override
     public Stream<Command> processArchivedEvent(String workflowId, EventOuterClass.ArchivedEvent event) {
         return Stream.empty();
     }
@@ -259,6 +250,4 @@ public class MarketSetupProcessor extends EventProcessor {
                     .setLabel("amount")
                     .setValue(Value.newBuilder().setDecimal(amount))));
     }
-
-
 }

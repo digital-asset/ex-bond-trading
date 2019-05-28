@@ -5,9 +5,11 @@
 *.iml
 *.log
 .idea/
+.interfaces/
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 .navigator.conf
+.package-database/
 .vscode/settings.json
 buildNumber.properties
 dependency-reduced-pom.xml

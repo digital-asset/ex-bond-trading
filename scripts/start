@@ -16,10 +16,6 @@ SETUP_FILE=${2:-data/SingleAssets.csv}
 
 export LINES=$(tput lines)
 
-runSb() {
-  da start navigator
-}
-
 APP_PIDS=""
 
 CSI="\033["
@@ -28,11 +24,11 @@ cmd=$((viewport + 1))
 status=$((cmd + 1))
 
 runApp () {
-  java -jar $APP_JAR --port 7600 $@
+  java -jar $APP_JAR --port 6865 $@
 }
 
 runBackground() {
-  java -jar $APP_JAR --port 7600 $@ &
+  java -jar $APP_JAR --port 6865 $@ &
   APP_PIDS="$APP_PIDS $!"
 }
 
@@ -42,13 +38,8 @@ stop() {
   echo Stopping applications...
   kill $APP_PIDS
   sleep 2
-  da stop
   exit 0
 }
-
-# start the sandbox
-
-runSb
 
 # Clear screen and set the scroll area
 printf "${CSI}2J${CSI}1;${viewport}r"

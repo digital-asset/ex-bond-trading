@@ -217,7 +217,7 @@ public class BondTradingMain {
     private String host = "localhost";
 
     @Option(name = "--port", aliases = {"-p"}, metaVar = "PORT", usage = "port to connect to")
-    private int port = 7600;
+    private int port = 6865;
 
     @Option(name = "--color",aliases = {"-c"}, metaVar = "COLOR", usage = "use this text color for output (ANSI colors only)")
     private String textColor = "";

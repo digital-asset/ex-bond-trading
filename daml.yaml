@@ -1,0 +1,13 @@
+sdk-version: 0.12.20
+name: ex-bond-trading
+version: 1.0.0
+source: src/main/daml/BondTradingMain.daml
+parties:
+- Bank
+- Alice
+- Bob
+exposed-modules:
+- Main
+dependencies:
+- daml-prim
+- daml-stdlib

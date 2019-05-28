@@ -12,14 +12,19 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty</artifactId>
+            <version>1.21.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.daml.ledger</groupId>
             <artifactId>bindings-java</artifactId>
-            <version>2.7.0</version>
+            <version>100.12.20</version>
         </dependency>
         <dependency>
             <groupId>com.digitalasset</groupId>
             <artifactId>daml-lf-archive</artifactId>
-            <version>19.1.0</version>
+            <version>100.12.20</version>
         </dependency>
         <dependency>
             <groupId>args4j</groupId>
