@@ -9,7 +9,7 @@ VERSION ?= 1.0
 
 # logic to force use docker builders
 ifneq ($(FORCE_DOCKER),true)
-	local_da := $(shell which da)
+	local_da := $(shell which daml)
 	local_mvn := $(shell which mvn)
 endif
 
@@ -35,9 +35,9 @@ test: test-dar test-app test-integration
 # test -> build
 
 # damlc command - use docker or local
-damlc_cmd := da run damlc --
+damlc_cmd := daml damlc --
 
-sdk_version ?= $(shell cat da.yaml | grep sdk-version | tr -d ' ' | cut -d':' -f2)
+sdk_version ?= $(shell cat daml.yaml | grep sdk-version | tr -d ' ' | cut -d':' -f2)
 damlc_docker_cmd := \
 	docker run -t --rm \
 	-v $(PWD):/usr/src/ \
@@ -59,9 +59,9 @@ damlsrc := src/main/daml
 test-dar: $(dar_test_result)
 
 # TODO - move to junit files when new version of SDK comes out
-$(dar_test_result): $(shell find $(damlsrc) -type f) da.yaml
+$(dar_test_result): $(shell find $(damlsrc) -type f) daml.yaml
 	@echo test triggered because these files changed: $?
-	$(damlc) test --junit $@ $(damlsrc)/Test.daml
+	$(damlc) test --junit $@ --files $(damlsrc)/Test.daml
 
 
 # dar build

@@ -16,8 +16,11 @@ SETUP_FILE=${2:-data/SingleAssets.csv}
 
 export LINES=$(tput lines)
 
+SB_PIDS=""
+
 runSb() {
-  da start navigator
+  daml start --open-browser no > daml.log 2>&1 &
+  SB_PIDS="$SB_PIDS $!"
 }
 
 APP_PIDS=""
@@ -28,11 +31,11 @@ cmd=$((viewport + 1))
 status=$((cmd + 1))
 
 runApp () {
-  java -jar $APP_JAR --port 7600 $@
+  java -jar $APP_JAR --port 6865 $@
 }
 
 runBackground() {
-  java -jar $APP_JAR --port 7600 $@ &
+  java -jar $APP_JAR --port 6865 $@ &
   APP_PIDS="$APP_PIDS $!"
 }
 
@@ -42,13 +45,21 @@ stop() {
   echo Stopping applications...
   kill $APP_PIDS
   sleep 2
-  da stop
+  # kill -SIGINT $SB_PIDS
+  kill $(lsof -ti :7500)
+  kill $(lsof -ti :6865)
   exit 0
 }
 
 # start the sandbox
 
 runSb
+printf "Waiting for sandbox on 6865"
+while !(lsof -i :6865)
+do
+  printf "."
+  sleep 2
+done
 
 # Clear screen and set the scroll area
 printf "${CSI}2J${CSI}1;${viewport}r"
@@ -75,6 +86,3 @@ do
 done
 
 stop
-
-
-

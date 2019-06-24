@@ -1,9 +1,11 @@
 // Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { DamlLfValue } from '@da/ui-core';
+
 export const version = {
     schema: 'navigator-config',
-    major: 1,
+    major: 2,
     minor: 0,
   };
 
@@ -62,7 +64,7 @@ export const version = {
             title: "Owner",
             createCell: ({rowData}) => ({
               type: "text",
-              value: rowData.argument.owner
+              value: DamlLfValue.toJSON(rowData.argument).owner
             }),
             sortable: true,
             width: 80,
@@ -74,7 +76,7 @@ export const version = {
             title: "Symbol",
             createCell: ({rowData}) => ({
               type: "text",
-              value: rowData.argument.isin || rowData.argument.currency
+              value: DamlLfValue.toJSON(rowData.argument).isin || DamlLfValue.toJSON(rowData.argument).currency
             }),
             sortable: true,
             width: 80,
@@ -86,7 +88,7 @@ export const version = {
             title: "Amount",
             createCell: ({rowData}) => ({
               type: "text",
-              value: rowData.argument.amount
+              value: DamlLfValue.toJSON(rowData.argument).amount
             }),
             sortable: true,
             width: 200,
@@ -133,7 +135,7 @@ export const version = {
             title: "DvP ID",
             createCell: ({rowData}) => ({
               type: "text",
-              value: rowData.argument.c.dvpId
+              value: DamlLfValue.toJSON(rowData.argument).c.dvpId
             }),
             sortable: true,
             width: 40,
@@ -150,7 +152,7 @@ export const version = {
                   ? "Proposed"
                   : rowData.template.id.substring(4,16) == "DvpAllocated"
                   ? "Allocated"
-                  : rowData.template.id.substring(4,19) == "DvpNotification"
+                  : rowData.template.id.substring(16,31) == "DvpNotification"
                   ? "Settled"
                   : rowData.template.id.substring(4,7) == "Dvp"
                   ? "Accepted"
@@ -167,7 +169,7 @@ export const version = {
             title: "Buyer",
             createCell: ({rowData}) => ({
               type: "text",
-              value: rowData.argument.c.buyer
+              value: DamlLfValue.toJSON(rowData.argument).c.buyer
             }),
             sortable: true,
             width: 40,
@@ -179,7 +181,7 @@ export const version = {
             title: "Seller",
             createCell: ({rowData}) => ({
               type: "text",
-              value: rowData.argument.c.seller
+              value: DamlLfValue.toJSON(rowData.argument).c.seller
             }),
             sortable: true,
             width: 40,
@@ -191,7 +193,7 @@ export const version = {
             title: "CCY",
             createCell: ({rowData}) => ({
               type: "text",
-              value: rowData.argument.c.cashCurrency
+              value: DamlLfValue.toJSON(rowData.argument).c.cashCurrency
             }),
             sortable: true,
             width: 15,
@@ -203,7 +205,7 @@ export const version = {
             title: "Payment",
             createCell: ({rowData}) => ({
               type: "text",
-              value: rowData.argument.c.cashAmount
+              value: DamlLfValue.toJSON(rowData.argument).c.cashAmount
             }),
             sortable: true,
             width: 50,
@@ -215,7 +217,7 @@ export const version = {
             title: "ISIN",
             createCell: ({rowData}) => ({
               type: "text",
-              value: rowData.argument.c.bondIsin
+              value: DamlLfValue.toJSON(rowData.argument).c.bondIsin
             }),
             sortable: true,
             width: 45,
@@ -227,7 +229,7 @@ export const version = {
             title: "Delivery",
             createCell: ({rowData}) => ({
               type: "text",
-              value: rowData.argument.c.bondAmount
+              value: DamlLfValue.toJSON(rowData.argument).c.bondAmount
             }),
             sortable: true,
             width: 50,
