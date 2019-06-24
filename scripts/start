@@ -19,7 +19,7 @@ export LINES=$(tput lines)
 SB_PIDS=""
 
 runSb() {
-  daml start --open-browser no > daml.log 2>&1 &
+  ~/.daml/bin/daml start --open-browser no > daml.log 2>&1 &
   SB_PIDS="$SB_PIDS $!"
 }
 

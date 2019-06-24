@@ -35,17 +35,16 @@ test: test-dar test-app test-integration
 # test -> build
 
 # damlc command - use docker or local
-damlc_cmd := daml damlc --
+damlc_cmd := '~/.daml/bin/daml'" -- damlc --"
 
 sdk_version ?= $(shell cat daml.yaml | grep sdk-version | tr -d ' ' | cut -d':' -f2)
 damlc_docker_cmd := \
 	docker run -t --rm \
 	-v $(PWD):/usr/src/ \
 	-w /usr/src \
-	-c 'export PATH=$PATH:~/.daml/bin; bash' \
-	digitalasset/daml-sdk:$(sdk_version) $(damlc_cmd)
+	digitalasset/daml-sdk:$(sdk_version) bash -c $(damlc_cmd)''
 
-damlc := $(if $(local_da), $(damlc_cmd), $(damlc_docker_cmd))
+damlc := $(if $(local_da), bash -c $(damlc_cmd), $(damlc_docker_cmd))
 
 # results
 dar_test_result := target/DarTests.xml
@@ -62,7 +61,7 @@ test-dar: $(dar_test_result)
 # TODO - move to junit files when new version of SDK comes out
 $(dar_test_result): $(shell find $(damlsrc) -type f) daml.yaml
 	@echo test triggered because these files changed: $?
-	$(damlc) test --junit $@ --files $(damlsrc)/Test.daml
+	$(damlc)" test --junit $@ --files $(damlsrc)/Test.daml"
 
 
 # dar build
@@ -71,7 +70,7 @@ build-dar: $(dar_build_result)
 
 $(dar_build_result): $(dar_test_result)
 	@echo build triggered because these files changed: $?
-	$(damlc) package $(damlsrc)/$(@F:.dar=.daml) $(basename $@)
+	$(damlc)" package $(damlsrc)/$(@F:.dar=.daml) $(basename $@)"
 
 
 ################
@@ -141,11 +140,11 @@ docker_runner := \
 	-v $(PWD):/usr/src/ \
 	-p 7500:7500 \
 	-w /usr/src \
-	digitalasset/daml-sdk:$(sdk_version)-master
+	digitalasset/daml-sdk:$(sdk_version) bash -c "apk add ncurses lsof;"
 
 .PHONY: start
 start: all
-	$(if $(local_da),,$(docker_runner)) ./scripts/start
+	$(if $(local_da),bash -c ,$(docker_runner))" ./scripts/start"
 
 
 ########
