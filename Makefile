@@ -42,6 +42,7 @@ damlc_docker_cmd := \
 	docker run -t --rm \
 	-v $(PWD):/usr/src/ \
 	-w /usr/src \
+	-c 'export PATH=$PATH:~/.daml/bin; bash' \
 	digitalasset/daml-sdk:$(sdk_version) $(damlc_cmd)
 
 damlc := $(if $(local_da), $(damlc_cmd), $(damlc_docker_cmd))
