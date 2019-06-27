@@ -50,10 +50,12 @@ export const version = {
           {
             key: "type",
             title: "Type",
-            createCell: ({rowData}) => ({
+            createCell: ({rowData}) => {
+              console.log(rowData);
+              return ({
               type: "text",
               value: rowData.template.id.substring(0,4)
-            }),
+            })},
             sortable: true,
             width: 80,
             weight: 0,

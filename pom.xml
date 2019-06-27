@@ -14,17 +14,12 @@
         <dependency>
             <groupId>com.daml.ledger</groupId>
             <artifactId>bindings-java</artifactId>
-            <version>100.13.5</version>
+            <version>100.13.7</version>
         </dependency>
         <dependency>
             <groupId>com.digitalasset</groupId>
             <artifactId>daml-lf-archive</artifactId>
-            <version>100.13.5</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-netty</artifactId>
-            <version>1.21.0</version>
+            <version>100.13.7</version>
         </dependency>
         <dependency>
             <groupId>args4j</groupId>
