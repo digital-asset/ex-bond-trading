@@ -14,12 +14,23 @@
         <dependency>
             <groupId>com.daml.ledger</groupId>
             <artifactId>bindings-java</artifactId>
-            <version>2.7.0</version>
+            <version>100.13.10</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.digitalasset</groupId>
             <artifactId>daml-lf-archive</artifactId>
-            <version>19.1.0</version>
+            <version>100.13.10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.8.0</version>
         </dependency>
         <dependency>
             <groupId>args4j</groupId>
@@ -107,22 +118,7 @@
             <name>bintray</name>
             <url>https://digitalassetsdk.bintray.com/DigitalAssetSDK</url>
         </repository>
-        <repository>
-            <id>Sonatype-public</id>
-            <name>Sonatype public repository</name>
-            <url>http://oss.sonatype.org/content/groups/public/</url>
-        </repository>
     </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>bintray-digitalassetsdk-DigitalAssetSDK</id>
-            <name>bintray-plugins</name>
-            <url>https://digitalassetsdk.bintray.com/DigitalAssetSDK</url>
-        </pluginRepository>
-    </pluginRepositories>
     <reporting>
         <plugins>
             <plugin>

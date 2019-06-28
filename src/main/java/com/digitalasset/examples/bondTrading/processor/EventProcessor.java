@@ -17,7 +17,6 @@ import com.digitalasset.ledger.api.v1.CommandsOuterClass.ExerciseCommand;
 import com.digitalasset.ledger.api.v1.EventOuterClass;
 import com.digitalasset.ledger.api.v1.EventOuterClass.Event;
 import com.digitalasset.ledger.api.v1.EventOuterClass.CreatedEvent;
-import com.digitalasset.ledger.api.v1.EventOuterClass.ExercisedEvent;
 import com.digitalasset.ledger.api.v1.LedgerOffsetOuterClass;
 import com.digitalasset.ledger.api.v1.TransactionFilterOuterClass;
 import com.digitalasset.ledger.api.v1.TransactionOuterClass.Transaction;
@@ -125,7 +124,6 @@ abstract class EventProcessor {
     }
 
     abstract Stream<Command> processCreatedEvent(String workflowId, EventOuterClass.CreatedEvent event);        // process and react to Create events
-    abstract Stream<Command> processExerciseEvent(String workflowId, EventOuterClass.ExercisedEvent event);     // process and react to Exercise events
     abstract Stream<Command> processArchivedEvent(String workflowId, EventOuterClass.ArchivedEvent event);      // process and react to Archive events
 
     public int run() {
@@ -213,8 +211,6 @@ abstract class EventProcessor {
 
         if (event.hasCreated()) {
             return processCreatedEvent(tx.getWorkflowId(), event.getCreated());
-        } else if(event.hasExercised()){
-            return processExerciseEvent(tx.getWorkflowId(), event.getExercised());
         } else if(event.hasArchived()) {
             return processArchivedEvent(tx.getWorkflowId(), event.getArchived());
         }
@@ -319,9 +315,9 @@ abstract class EventProcessor {
                 desc = ", templateId="+identifierToString(ce.getTemplateId())+", contractId="+ce.getContractId();
                 break;
 
-            case EXERCISED:
-                ExercisedEvent ee = event.getExercised();
-                desc = ", templateId="+identifierToString(ee.getTemplateId())+", contractId="+ee.getContractId()+", choice="+ee.getChoice();
+            case ARCHIVED:
+                EventOuterClass.ArchivedEvent ee = event.getArchived();
+                desc = ", templateId="+identifierToString(ee.getTemplateId())+", contractId="+ee.getContractId();
                 break;
 
             default:
