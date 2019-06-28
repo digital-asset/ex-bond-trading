@@ -42,7 +42,7 @@ damlc_docker_cmd := \
 	docker run -t --rm \
 	-v $(PWD):/usr/src/ \
 	-w /usr/src \
-	digitalasset/daml-sdk:$(sdk_version) bash -c $(damlc_cmd)''
+	digitalasset/daml-sdk:$(sdk_version) bash -c 'apk add tree; tree; '$(damlc_cmd)''
 
 damlc := $(if $(local_da), bash -c $(damlc_cmd), $(damlc_docker_cmd))
 
