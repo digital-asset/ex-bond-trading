@@ -1,7 +1,7 @@
 # Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-sdk-version: 0.13.7
+sdk-version: 0.13.10
 name: ex-bond-trading
 source: src/main/daml/BondTradingMain.daml
 parties:

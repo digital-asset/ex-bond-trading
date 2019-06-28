@@ -14,7 +14,7 @@
         <dependency>
             <groupId>com.daml.ledger</groupId>
             <artifactId>bindings-java</artifactId>
-            <version>100.13.7</version>
+            <version>100.13.10</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.google.protobuf</groupId>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.digitalasset</groupId>
             <artifactId>daml-lf-archive</artifactId>
-            <version>100.13.7</version>
+            <version>100.13.10</version>
         </dependency>
         <dependency>
             <groupId>com.google.protobuf</groupId>

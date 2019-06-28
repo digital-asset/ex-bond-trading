@@ -140,7 +140,7 @@ docker_runner := \
 	-v $(PWD):/usr/src/ \
 	-p 7500:7500 \
 	-w /usr/src \
-	digitalasset/daml-sdk:$(sdk_version) bash -c "apk add ncurses lsof;"
+	digitalasset/daml-sdk:$(sdk_version) bash -c "apk add ncurses;"
 
 .PHONY: start
 start: all
