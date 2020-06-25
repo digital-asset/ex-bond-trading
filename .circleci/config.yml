@@ -19,6 +19,7 @@ jobs:
           name: Build Application
           command: |
             apk add make maven
+            su daml
             make build-app
       - run:
           name: Test Application
@@ -46,6 +47,7 @@ jobs:
           name: Test Dar
           command: |
             apk add make
+            su daml
             make test-dar
       - run:
           name: Build Dar
