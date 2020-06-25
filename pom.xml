@@ -12,9 +12,9 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.daml.ledger</groupId>
+            <groupId>com.daml</groupId>
             <artifactId>bindings-java</artifactId>
-            <version>100.13.10</version>
+            <version>1.2.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.google.protobuf</groupId>
@@ -23,14 +23,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.digitalasset</groupId>
-            <artifactId>daml-lf-archive</artifactId>
-            <version>100.13.10</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>3.8.0</version>
+            <version>3.11.0</version>
         </dependency>
         <dependency>
             <groupId>args4j</groupId>

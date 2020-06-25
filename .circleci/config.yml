@@ -2,22 +2,28 @@
 # SPDX-License-Identifier: (Apache-2.0 OR BSD-3-Clause)
 version: 2.1
 
+commands:
+  install_sdk:
+    description: "Install the DAML SDK"
+    steps:
+      - run:
+          command: curl https://get.daml.com | sh -s 1.2.0
+
 jobs:
   application:
     docker:
-      - image: digitalasset/daml-sdk:0.13.10
+      - image: circleci/openjdk:11.0-jdk
     environment:
       MAVEN_OPTS: -Xmx3200m
     steps:
       - checkout
       - restore_cache:
           keys:
-            - m2-{{ checksum "pom.xml" }}
-            - m2
+            - v1-m2-{{ checksum "pom.xml" }}
+      - install_sdk
       - run:
           name: Build Application
           command: |
-            apk add make maven
             make build-app
       - run:
           name: Test Application
@@ -25,7 +31,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-          key: m2-{{ checksum "pom.xml" }}
+          key: v1-m2-{{ checksum "pom.xml" }}
       - run:
           name: Save test results
           command: |
@@ -36,14 +42,14 @@ jobs:
           path: ~/test-results
   daml:
     docker:
-      - image: digitalasset/daml-sdk:0.13.10
+      - image: circleci/openjdk:11.0-jdk
     steps:
       - checkout
       - setup_remote_docker
+      - install_sdk
       - run:
           name: Test Dar
           command: |
-            apk add make
             make test-dar
       - run:
           name: Build Dar
@@ -58,7 +64,7 @@ jobs:
           path: ~/test-results
   integration-test:
     docker:
-      - image: digitalasset/daml-sdk:0.13.10
+      - image: digitalasset/daml-sdk:1.2.0
     steps:
       - checkout
       - run:

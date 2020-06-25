@@ -3,21 +3,19 @@
 
 package com.digitalasset.examples.bondTrading;
 
-import com.digitalasset.daml_lf.DamlLf;
-import com.digitalasset.daml_lf.DamlLf1;
 import com.digitalasset.examples.bondTrading.processor.MarketSetupProcessor;
 import com.digitalasset.examples.bondTrading.processor.TradeInjector;
 import com.digitalasset.examples.bondTrading.processor.TradingPartyProcessor;
-import com.digitalasset.ledger.api.v1.LedgerIdentityServiceGrpc;
-import com.digitalasset.ledger.api.v1.LedgerIdentityServiceGrpc.LedgerIdentityServiceBlockingStub;
-import com.digitalasset.ledger.api.v1.LedgerIdentityServiceOuterClass.GetLedgerIdentityRequest;
-import com.digitalasset.ledger.api.v1.LedgerIdentityServiceOuterClass.GetLedgerIdentityResponse;
-import com.digitalasset.ledger.api.v1.PackageServiceGrpc;
-import com.digitalasset.ledger.api.v1.PackageServiceGrpc.PackageServiceBlockingStub;
-import com.digitalasset.ledger.api.v1.PackageServiceOuterClass.GetPackageRequest;
-import com.digitalasset.ledger.api.v1.PackageServiceOuterClass.GetPackageResponse;
-import com.digitalasset.ledger.api.v1.PackageServiceOuterClass.ListPackagesRequest;
-import com.digitalasset.ledger.api.v1.PackageServiceOuterClass.ListPackagesResponse;
+import com.daml.ledger.api.v1.LedgerIdentityServiceGrpc;
+import com.daml.ledger.api.v1.LedgerIdentityServiceGrpc.LedgerIdentityServiceBlockingStub;
+import com.daml.ledger.api.v1.LedgerIdentityServiceOuterClass.GetLedgerIdentityRequest;
+import com.daml.ledger.api.v1.LedgerIdentityServiceOuterClass.GetLedgerIdentityResponse;
+import com.daml.ledger.api.v1.PackageServiceGrpc;
+import com.daml.ledger.api.v1.PackageServiceGrpc.PackageServiceBlockingStub;
+import com.daml.ledger.api.v1.PackageServiceOuterClass.GetPackageRequest;
+import com.daml.ledger.api.v1.PackageServiceOuterClass.GetPackageResponse;
+import com.daml.ledger.api.v1.PackageServiceOuterClass.ListPackagesRequest;
+import com.daml.ledger.api.v1.PackageServiceOuterClass.ListPackagesResponse;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.ManagedChannel;
@@ -213,6 +211,9 @@ public class BondTradingMain {
 
     // Class variables
 
+    @Option(name = "--main-package-id", metaVar = "PACKAGE_ID", usage = "main package id", required = true)
+    private String packageId = "";
+
     @Option(name = "--host", aliases = {"-h"}, metaVar = "HOST", usage = "host to connect to")
     private String host = "localhost";
 
@@ -250,7 +251,6 @@ public class BondTradingMain {
 
         // fetch the ledger ID, which is used in subsequent requests sent to the ledger
         String ledgerId = fetchLedgerId(channel);
-        String packageId = detectPackageId(channel,ledgerId);
 
         log.debug("Started, ledgerId={}, packageId={}", ledgerId, packageId);
 
@@ -324,44 +324,5 @@ public class BondTradingMain {
         LedgerIdentityServiceBlockingStub ledgerIdService = LedgerIdentityServiceGrpc.newBlockingStub(channel);
         GetLedgerIdentityResponse identityResponse = ledgerIdService.getLedgerIdentity(GetLedgerIdentityRequest.getDefaultInstance());
         return identityResponse.getLedgerId();
-    }
-
-    /**
-     * Inspects all DAML packages that are registered on the ledger and returns the id of the package that contains the BondTrading module.
-     * This is useful during development when the DAML model changes a lot, so that the package id doesn't need to be updated manually
-     * after each change.
-     *
-     * @param channel  the gRPC channel to use for services
-     * @param ledgerId the ledger id to use for requests
-     * @return the package id of the example DAML module
-     */
-    private static String detectPackageId(ManagedChannel channel, String ledgerId) {
-        PackageServiceBlockingStub packageService = PackageServiceGrpc.newBlockingStub(channel);
-
-        // fetch a list of all package ids available on the ledger
-        ListPackagesResponse packagesResponse = packageService.listPackages(ListPackagesRequest.newBuilder().setLedgerId(ledgerId).build());
-
-        // find the package that contains the Bond Trading module
-        for (String packageId : packagesResponse.getPackageIdsList()) {
-            GetPackageResponse getPackageResponse = packageService.getPackage(GetPackageRequest.newBuilder().setLedgerId(ledgerId).setPackageId(packageId).build());
-            try {
-                // parse the archive payload
-                DamlLf.ArchivePayload payload = DamlLf.ArchivePayload.parseFrom(getPackageResponse.getArchivePayload());
-                // get the DAML LF package
-                DamlLf1.Package lfPackage = payload.getDamlLf1();
-                // check if the Bond Trading module is in the current package package
-                Optional<DamlLf1.Module> bondTradingModule = lfPackage.getModulesList().stream()
-                    .filter(m -> m.getName().getSegmentsList().contains(MAIN_MODULE)).findFirst();
-
-                if (bondTradingModule.isPresent())
-                    return packageId;
-
-            } catch (InvalidProtocolBufferException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-        }
-        // No package on the ledger contained the PingPong module
-        throw new RuntimeException("Module '"+MAIN_MODULE+"' is not available on the ledger");
     }
 }
