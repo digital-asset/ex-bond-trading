@@ -5,7 +5,7 @@ version: 2.1
 jobs:
   application:
     docker:
-      - image: digitalasset/daml-sdk:0.13.10
+      - image: digitalasset/daml-sdk:1.2.0
     environment:
       MAVEN_OPTS: -Xmx3200m
     steps:
@@ -36,7 +36,7 @@ jobs:
           path: ~/test-results
   daml:
     docker:
-      - image: digitalasset/daml-sdk:0.13.10
+      - image: digitalasset/daml-sdk:1.2.0
     steps:
       - checkout
       - setup_remote_docker
@@ -58,7 +58,7 @@ jobs:
           path: ~/test-results
   integration-test:
     docker:
-      - image: digitalasset/daml-sdk:0.13.10
+      - image: digitalasset/daml-sdk:1.2.0
     steps:
       - checkout
       - run:
