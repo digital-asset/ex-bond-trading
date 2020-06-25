@@ -17,7 +17,7 @@ jobs:
       - run:
           name: Build Application
           command: |
-            apk add make maven
+            su -c "apk add make maven"
             make build-app
       - run:
           name: Test Application
@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Test Dar
           command: |
-            sudo apk add make
+            su -c "apk add make"
             make test-dar
       - run:
           name: Build Dar
