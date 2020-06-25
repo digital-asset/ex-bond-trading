@@ -46,18 +46,17 @@ jobs:
       - run:
           name: Test Dar
           command: |
-            apk add make
-            su - daml -s /bin/bash
-            make test-dar
+            apk add make maven
+            su - daml -s /bin/bash -c "make test-dar"
       - run:
           name: Build Dar
           command:  |
-            make build-dar
+            su - daml -s /bin/bash -c "make build-dar"
       - run:
           name: Save test results
           command: |
-            mkdir -pv ~/test-results/daml
-            find . -type f -regex ".*/target/.*DarTests.xml" -exec cp {} ~/test-results/daml/ \;
+            su - daml -s /bin/bash -c "mkdir -pv ~/test-results/daml"
+            su - daml -s ibin/bash -c "find . -type f -regex ".*/target/.*DarTests.xml" -exec cp {} ~/test-results/daml/ \;"
       - store_test_results:
           path: ~/test-results
   integration-test:
