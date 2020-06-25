@@ -20,7 +20,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-m2-{{ checksum "pom.xml" }}
-            - m2
       - install_sdk
       - run:
           name: Build Application
