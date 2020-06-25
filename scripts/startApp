@@ -18,18 +18,20 @@ export LINES=$(tput lines)
 
 APP_PIDS=""
 
+MAIN_PACKAGE_ID=$(daml damlc inspect-dar .daml/dist/ex-bond-trading-3.0.0.dar --json | jq .main_package_id -r)
+
 CSI="\033["
 viewport=$(($(tput lines) - 2))
 cmd=$((viewport + 1))
 status=$((cmd + 1))
 
 runApp () {
-  java -jar $APP_JAR --port 6865 $@ &
+  java -jar $APP_JAR --main-package-id $MAIN_PACKAGE_ID --port 6865 $@ &
   APP_PIDS="$APP_PIDS $!"
 }
 
 runBackground() {
-  java -jar $APP_JAR --port 6865 $@ &
+  java -jar $APP_JAR --main-package-id $MAIN_PACKAGE_ID --port 6865 $@ &
   APP_PIDS="$APP_PIDS $!"
 }
 

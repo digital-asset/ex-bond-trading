@@ -4,28 +4,28 @@
 package com.digitalasset.examples.bondTrading.processor;
 
 import com.digitalasset.examples.bondTrading.BondTradingMain;
-import com.digitalasset.ledger.api.v1.CommandCompletionServiceGrpc;
-import com.digitalasset.ledger.api.v1.CommandCompletionServiceOuterClass;
-import com.digitalasset.ledger.api.v1.CommandSubmissionServiceGrpc;
-import com.digitalasset.ledger.api.v1.CommandSubmissionServiceOuterClass.SubmitRequest;
-import com.digitalasset.ledger.api.v1.CompletionOuterClass;
-import com.digitalasset.ledger.api.v1.CompletionOuterClass.Completion;
-import com.digitalasset.ledger.api.v1.CommandsOuterClass;
-import com.digitalasset.ledger.api.v1.CommandsOuterClass.Command;
-import com.digitalasset.ledger.api.v1.CommandsOuterClass.CreateCommand;
-import com.digitalasset.ledger.api.v1.CommandsOuterClass.ExerciseCommand;
-import com.digitalasset.ledger.api.v1.EventOuterClass;
-import com.digitalasset.ledger.api.v1.EventOuterClass.Event;
-import com.digitalasset.ledger.api.v1.EventOuterClass.CreatedEvent;
-import com.digitalasset.ledger.api.v1.LedgerOffsetOuterClass;
-import com.digitalasset.ledger.api.v1.TransactionFilterOuterClass;
-import com.digitalasset.ledger.api.v1.TransactionOuterClass.Transaction;
-import com.digitalasset.ledger.api.v1.TransactionServiceGrpc;
-import com.digitalasset.ledger.api.v1.TransactionServiceOuterClass;
-import com.digitalasset.ledger.api.v1.ValueOuterClass;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.Identifier;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.Record;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.Value;
+import com.daml.ledger.api.v1.CommandCompletionServiceGrpc;
+import com.daml.ledger.api.v1.CommandCompletionServiceOuterClass;
+import com.daml.ledger.api.v1.CommandSubmissionServiceGrpc;
+import com.daml.ledger.api.v1.CommandSubmissionServiceOuterClass.SubmitRequest;
+import com.daml.ledger.api.v1.CompletionOuterClass;
+import com.daml.ledger.api.v1.CompletionOuterClass.Completion;
+import com.daml.ledger.api.v1.CommandsOuterClass;
+import com.daml.ledger.api.v1.CommandsOuterClass.Command;
+import com.daml.ledger.api.v1.CommandsOuterClass.CreateCommand;
+import com.daml.ledger.api.v1.CommandsOuterClass.ExerciseCommand;
+import com.daml.ledger.api.v1.EventOuterClass;
+import com.daml.ledger.api.v1.EventOuterClass.Event;
+import com.daml.ledger.api.v1.EventOuterClass.CreatedEvent;
+import com.daml.ledger.api.v1.LedgerOffsetOuterClass;
+import com.daml.ledger.api.v1.TransactionFilterOuterClass;
+import com.daml.ledger.api.v1.TransactionOuterClass.Transaction;
+import com.daml.ledger.api.v1.TransactionServiceGrpc;
+import com.daml.ledger.api.v1.TransactionServiceOuterClass;
+import com.daml.ledger.api.v1.ValueOuterClass;
+import com.daml.ledger.api.v1.ValueOuterClass.Identifier;
+import com.daml.ledger.api.v1.ValueOuterClass.Record;
+import com.daml.ledger.api.v1.ValueOuterClass.Value;
 
 
 import com.google.protobuf.Empty;
@@ -276,12 +276,9 @@ abstract class EventProcessor {
             commands.forEach(cmd -> log.debug("{} sending command {}, commandId={}", party, cmdDescription(cmd), commandId));
             log.info("{} submits commands, commandId={}, workflowId={}", party, commandId, workFlowId);
 
-            long ledgerEffTimeSecs = (useWallTime ? System.currentTimeMillis() : Instant.EPOCH.toEpochMilli()) / 1000 ;
             SubmitRequest request = SubmitRequest.newBuilder()
                 .setCommands(CommandsOuterClass.Commands.newBuilder()
                     .setCommandId(commandId)
-                    .setLedgerEffectiveTime(Timestamp.newBuilder().setSeconds(ledgerEffTimeSecs))
-                    .setMaximumRecordTime(Timestamp.newBuilder().setSeconds(ledgerEffTimeSecs+10L))
                     .setWorkflowId(workFlowId)
                     .setLedgerId(ledgerId)
                     .setParty(party)

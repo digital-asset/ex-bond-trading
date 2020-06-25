@@ -6,14 +6,14 @@ package com.digitalasset.examples.bondTrading.processor;
 import io.grpc.ManagedChannel;
 
 import com.digitalasset.examples.bondTrading.BondTradingMain;
-import com.digitalasset.ledger.api.v1.CommandsOuterClass.Command;
-import com.digitalasset.ledger.api.v1.CompletionOuterClass;
-import com.digitalasset.ledger.api.v1.EventOuterClass;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.Identifier;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.Record;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.List;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.RecordField;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.Value;
+import com.daml.ledger.api.v1.CommandsOuterClass.Command;
+import com.daml.ledger.api.v1.CompletionOuterClass;
+import com.daml.ledger.api.v1.EventOuterClass;
+import com.daml.ledger.api.v1.ValueOuterClass.Identifier;
+import com.daml.ledger.api.v1.ValueOuterClass.Record;
+import com.daml.ledger.api.v1.ValueOuterClass.List;
+import com.daml.ledger.api.v1.ValueOuterClass.RecordField;
+import com.daml.ledger.api.v1.ValueOuterClass.Value;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -229,7 +229,7 @@ public class MarketSetupProcessor extends EventProcessor {
                     .setValue(Value.newBuilder().setText(isin)))
                 .addFields(RecordField.newBuilder()
                     .setLabel("amount")
-                    .setValue(Value.newBuilder().setDecimal(amount))));
+                    .setValue(Value.newBuilder().setNumeric(amount))));
     }
 
     private Value.Builder cashEntry(String currency, String amount) {
@@ -248,7 +248,7 @@ public class MarketSetupProcessor extends EventProcessor {
                     .setValue(Value.newBuilder().setText(currency)))
                 .addFields(RecordField.newBuilder()
                     .setLabel("amount")
-                    .setValue(Value.newBuilder().setDecimal(amount))));
+                    .setValue(Value.newBuilder().setNumeric(amount))));
     }
 
 
