@@ -2,11 +2,17 @@
 # SPDX-License-Identifier: (Apache-2.0 OR BSD-3-Clause)
 version: 2.1
 
+commands:
+  install_sdk:
+    description: "Install the DAML SDK"
+    steps:
+      - run:
+          command: curl https://get.daml.com | sh -s 1.2.0
+
 jobs:
   application:
     docker:
-      - image: digitalasset/daml-sdk:1.2.0
-        user: root
+      - image: circleci/openjdk:11.0-jdk
     environment:
       MAVEN_OPTS: -Xmx3200m
     steps:
@@ -15,11 +21,11 @@ jobs:
           keys:
             - m2-{{ checksum "pom.xml" }}
             - m2
+      - install_sdk
       - run:
           name: Build Application
           command: |
-            apk add make maven
-            su daml -s /bin/bash -c "make build-app"
+            make build-app
       - run:
           name: Test Application
           command: make test-app
@@ -37,25 +43,24 @@ jobs:
           path: ~/test-results
   daml:
     docker:
-      - image: digitalasset/daml-sdk:1.2.0
-        user: root
+      - image: circleci/openjdk:11.0-jdk
     steps:
       - checkout
       - setup_remote_docker
+      - install_sdk
       - run:
           name: Test Dar
           command: |
-            apk add make maven
-            su daml -s /bin/bash -c "make test-dar"
+            make test-dar
       - run:
           name: Build Dar
           command:  |
-            su daml -s /bin/bash -c "make build-dar"
+            make build-dar
       - run:
           name: Save test results
           command: |
-            su daml -s /bin/bash -c "mkdir -pv ~/test-results/daml"
-            su daml -s ibin/bash -c "find . -type f -regex ".*/target/.*DarTests.xml" -exec cp {} ~/test-results/daml/ \;"
+            mkdir -pv ~/test-results/daml
+            find . -type f -regex ".*/target/.*DarTests.xml" -exec cp {} ~/test-results/daml/ \;
       - store_test_results:
           path: ~/test-results
   integration-test:
