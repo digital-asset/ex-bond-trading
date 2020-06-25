@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Test Dar
           command: |
-            apk add make
+            sudo apk add make
             make test-dar
       - run:
           name: Build Dar
