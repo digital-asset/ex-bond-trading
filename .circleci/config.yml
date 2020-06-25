@@ -19,8 +19,7 @@ jobs:
           name: Build Application
           command: |
             apk add make maven
-            su - daml -s /bin/bash
-            make build-app
+            su daml -s /bin/bash -c "make build-app"
       - run:
           name: Test Application
           command: make test-app
@@ -47,16 +46,16 @@ jobs:
           name: Test Dar
           command: |
             apk add make maven
-            su - daml -s /bin/bash -c "make test-dar"
+            su daml -s /bin/bash -c "make test-dar"
       - run:
           name: Build Dar
           command:  |
-            su - daml -s /bin/bash -c "make build-dar"
+            su daml -s /bin/bash -c "make build-dar"
       - run:
           name: Save test results
           command: |
-            su - daml -s /bin/bash -c "mkdir -pv ~/test-results/daml"
-            su - daml -s ibin/bash -c "find . -type f -regex ".*/target/.*DarTests.xml" -exec cp {} ~/test-results/daml/ \;"
+            su daml -s /bin/bash -c "mkdir -pv ~/test-results/daml"
+            su daml -s ibin/bash -c "find . -type f -regex ".*/target/.*DarTests.xml" -exec cp {} ~/test-results/daml/ \;"
       - store_test_results:
           path: ~/test-results
   integration-test:
