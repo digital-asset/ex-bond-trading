@@ -6,7 +6,7 @@ jobs:
   application:
     docker:
       - image: digitalasset/daml-sdk:1.2.0
-      - user: root
+        user: root
     environment:
       MAVEN_OPTS: -Xmx3200m
     steps:
@@ -38,7 +38,7 @@ jobs:
   daml:
     docker:
       - image: digitalasset/daml-sdk:1.2.0
-      - user: root
+        user: root
     steps:
       - checkout
       - setup_remote_docker
