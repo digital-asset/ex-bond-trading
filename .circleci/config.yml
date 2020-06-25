@@ -19,9 +19,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - m2-{{ checksum "pom.xml" }}
+            - v1-m2-{{ checksum "pom.xml" }}
             - m2
-            - abc
       - install_sdk
       - run:
           name: Build Application
@@ -33,7 +32,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-          key: m2-{{ checksum "pom.xml" }}
+          key: v1-m2-{{ checksum "pom.xml" }}
       - run:
           name: Save test results
           command: |
