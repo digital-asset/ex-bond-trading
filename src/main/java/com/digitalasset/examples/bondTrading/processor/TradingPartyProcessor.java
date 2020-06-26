@@ -4,16 +4,15 @@
 package com.digitalasset.examples.bondTrading.processor;
 
 import com.digitalasset.examples.bondTrading.BondTradingMain;
-import com.digitalasset.ledger.api.v1.CommandsOuterClass.Command;
-import com.digitalasset.ledger.api.v1.EventOuterClass.CreatedEvent;
-import com.digitalasset.ledger.api.v1.EventOuterClass.ArchivedEvent;
-import com.digitalasset.ledger.api.v1.EventOuterClass.ExercisedEvent;
-import com.digitalasset.ledger.api.v1.ValueOuterClass;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.Value;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.Record;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.RecordField;
+import com.daml.ledger.api.v1.CommandsOuterClass.Command;
+import com.daml.ledger.api.v1.EventOuterClass.CreatedEvent;
+import com.daml.ledger.api.v1.EventOuterClass.ArchivedEvent;
+import com.daml.ledger.api.v1.EventOuterClass.ExercisedEvent;
+import com.daml.ledger.api.v1.ValueOuterClass;
+import com.daml.ledger.api.v1.ValueOuterClass.Value;
+import com.daml.ledger.api.v1.ValueOuterClass.Record;
+import com.daml.ledger.api.v1.ValueOuterClass.RecordField;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import io.grpc.ManagedChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,7 +98,7 @@ public class TradingPartyProcessor extends EventProcessor {
         public static Asset cashFrom(CreatedEvent event) {
             return new Asset(
                 event.getContractId(),
-                new BigDecimal(getRecordValue(event.getCreateArguments(),"amount").getDecimal()),
+                new BigDecimal(getRecordValue(event.getCreateArguments(),"amount").getNumeric()),
                 getRecordValue(event.getCreateArguments(),"currency").getText(),
                 getRecordValue(event.getCreateArguments(),"owner").getParty(),
                 getRecordValue(event.getCreateArguments(),"issuer").getParty()
@@ -109,7 +108,7 @@ public class TradingPartyProcessor extends EventProcessor {
         public static Asset bondFrom(CreatedEvent event) {
             return  new Asset(
                 event.getContractId(),
-                new BigDecimal(getRecordValue(event.getCreateArguments(),"amount").getDecimal()),
+                new BigDecimal(getRecordValue(event.getCreateArguments(),"amount").getNumeric()),
                 getRecordValue(event.getCreateArguments(),"isin").getText(),
                 getRecordValue(event.getCreateArguments(),"owner").getParty(),
                 getRecordValue(event.getCreateArguments(),"issuer").getParty()            );
@@ -136,7 +135,7 @@ public class TradingPartyProcessor extends EventProcessor {
 
             this.cashLeg = new Asset(
                 null,
-                new BigDecimal(getDvpTermValue(event,"cashAmount").getDecimal()),
+                new BigDecimal(getDvpTermValue(event,"cashAmount").getNumeric()),
                 getDvpTermValue(event,"cashCurrency").getText(),
                 getDvpTermValue(event,"buyer").getParty(),
                 getDvpTermValue(event,"cashIssuer").getParty()
@@ -144,7 +143,7 @@ public class TradingPartyProcessor extends EventProcessor {
 
             this.bondLeg = new Asset(
                 null,
-                new BigDecimal(getDvpTermValue(event,"bondAmount").getDecimal()),
+                new BigDecimal(getDvpTermValue(event,"bondAmount").getNumeric()),
                 getDvpTermValue(event,"bondIsin").getText(),
                 getDvpTermValue(event,"seller").getParty(),
                 getDvpTermValue(event,"bondIssuer").getParty()
@@ -530,15 +529,6 @@ public class TradingPartyProcessor extends EventProcessor {
     }
 
     @Override
-    Stream<Command> processExerciseEvent(String workflowId, ExercisedEvent event) {
-
-        log.debug("{} receives an exercise event templateId={}, contractId={}, choice={}",
-            getParty(), event.getTemplateId(),event.getContractId(), event.getChoice()
-        );
-        return Stream.empty();
-    }
-
-    @Override
     Stream<Command> processArchivedEvent(String workflowId, ArchivedEvent event) {
         log.debug("{} receives an archive event templateId={}, contractId={}",
             getParty(),event.getTemplateId(),event.getContractId()
@@ -644,7 +634,7 @@ public class TradingPartyProcessor extends EventProcessor {
         assert cashEvent.getTemplateId().getEntityName().equals("Cash.Cash");
         Record cash = cashEvent.getCreateArguments();
         return String.format("%s %s owned by %s, issued by %s, locked=%s",
-            getRecordValue(cash,"amount").getDecimal(),
+            getRecordValue(cash,"amount").getNumeric(),
             getRecordValue(cash,"currency").getText(),
             getRecordValue(cash,"owner").getParty(),
             getRecordValue(cash,"issuer").getParty(),
@@ -656,7 +646,7 @@ public class TradingPartyProcessor extends EventProcessor {
         assert bondEvent.getTemplateId().getEntityName().equals("Bond.Bond");
         Record cash = bondEvent.getCreateArguments();
         return String.format("%s %s, owned by %s, issued by %s",
-            getRecordValue(cash,"amount").getDecimal(),
+            getRecordValue(cash,"amount").getNumeric(),
             getRecordValue(cash,"isin").getText(),
             getRecordValue(cash,"owner").getParty(),
             getRecordValue(cash,"issuer").getParty()
@@ -667,10 +657,10 @@ public class TradingPartyProcessor extends EventProcessor {
         Record dvpTerms = getRecordValue(dvpEvent.getCreateArguments(),"c").getRecord();
         return String.format("%s buys %s %s from %s for %s%s, dvpId=%s, settling at %s",
             getRecordValue(dvpTerms,"buyer").getParty(),
-            getRecordValue(dvpTerms, "bondAmount").getDecimal(),
+            getRecordValue(dvpTerms, "bondAmount").getNumeric(),
             getRecordValue(dvpTerms,"bondIsin").getText(),
             getRecordValue(dvpTerms,"seller").getParty(),
-            getRecordValue(dvpTerms,"cashAmount").getDecimal(),
+            getRecordValue(dvpTerms,"cashAmount").getNumeric(),
             getRecordValue(dvpTerms,"cashCurrency").getText(),
             getRecordValue(dvpTerms,"dvpId").getText(),
             new Timestamp(getRecordValue(dvpTerms,"settleTime").getTimestamp()/1000).toInstant()

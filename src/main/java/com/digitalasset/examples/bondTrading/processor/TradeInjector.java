@@ -4,13 +4,13 @@
 package com.digitalasset.examples.bondTrading.processor;
 
 import com.digitalasset.examples.bondTrading.BondTradingMain;
-import com.digitalasset.ledger.api.v1.CommandsOuterClass.Command;
-import com.digitalasset.ledger.api.v1.CompletionOuterClass;
-import com.digitalasset.ledger.api.v1.EventOuterClass;
-import com.digitalasset.ledger.api.v1.ValueOuterClass;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.Record;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.RecordField;
-import com.digitalasset.ledger.api.v1.ValueOuterClass.Value;
+import com.daml.ledger.api.v1.CommandsOuterClass.Command;
+import com.daml.ledger.api.v1.CompletionOuterClass;
+import com.daml.ledger.api.v1.EventOuterClass;
+import com.daml.ledger.api.v1.ValueOuterClass;
+import com.daml.ledger.api.v1.ValueOuterClass.Record;
+import com.daml.ledger.api.v1.ValueOuterClass.RecordField;
+import com.daml.ledger.api.v1.ValueOuterClass.Value;
 
 
 import io.grpc.ManagedChannel;
@@ -148,7 +148,7 @@ public class TradeInjector extends EventProcessor {
                 .setValue(ValueOuterClass.Value.newBuilder().setText(record.get("bondIsin"))))
             .addFields(ValueOuterClass.RecordField.newBuilder()
                 .setLabel("bondAmount")
-                .setValue(ValueOuterClass.Value.newBuilder().setDecimal(record.get("bondAmount"))))
+                .setValue(ValueOuterClass.Value.newBuilder().setNumeric(record.get("bondAmount"))))
             .addFields(ValueOuterClass.RecordField.newBuilder()
                 .setLabel("cashIssuer")
                 .setValue(ValueOuterClass.Value.newBuilder().setParty(record.get("cashIssuer"))))
@@ -157,7 +157,7 @@ public class TradeInjector extends EventProcessor {
                 .setValue(ValueOuterClass.Value.newBuilder().setText(record.get("cashCurrency"))))
             .addFields(ValueOuterClass.RecordField.newBuilder()
                 .setLabel("cashAmount")
-                .setValue(ValueOuterClass.Value.newBuilder().setDecimal(record.get("cashAmount"))))
+                .setValue(ValueOuterClass.Value.newBuilder().setNumeric(record.get("cashAmount"))))
             .addFields(ValueOuterClass.RecordField.newBuilder()
                 .setLabel("settleTime")
                 .setValue(ValueOuterClass.Value.newBuilder().setTimestamp(settlementTime)))
@@ -184,11 +184,6 @@ public class TradeInjector extends EventProcessor {
             default:
                 break;
         }
-        return Stream.empty();
-    }
-
-    @Override
-    Stream<Command> processExerciseEvent(String workflowId, EventOuterClass.ExercisedEvent event) {
         return Stream.empty();
     }
 
