@@ -10,7 +10,7 @@ import Dvp qualified
 import Settlement qualified
 import Setup qualified
 
-main = scenario do
+main = script do
   Bond.main
   Cash.main
   Setup.main
