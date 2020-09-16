@@ -6,6 +6,7 @@ module Cash where
 
 import DA.Optional
 import DA.Action
+import Daml.Script
 
 isLocked : Cash -> Bool
 isLocked this = this.owner /= this.locker
@@ -99,13 +100,13 @@ cashSplitMay owner cashCid splitAmount = do
       r <- exercise cashCid Split with splitAmount
       return (fst r, Some $ snd r)
 
-main = scenario do
-  acmeBank <- getParty "AcmeBank"
-  alice <- getParty "Alice"
-  bob <- getParty "Bob"
+main = script do
+  acmeBank <- allocateParty "AcmeBank"
+  alice <- allocateParty "Alice"
+  bob <- allocateParty "Bob"
 
   cashAlice1Cid <-
-    submit acmeBank do create CashTransferRequest with
+    submit acmeBank do createCmd CashTransferRequest with
                               issuer = acmeBank
                               owner = acmeBank
                               newOwner = alice
@@ -115,10 +116,10 @@ main = scenario do
                               lockMaturity = None
 
   cashAlice1Cid <-
-    submit alice do exercise cashAlice1Cid Accept
+    submit alice do exerciseCmd cashAlice1Cid Accept
 
   cashBob1Cid <-
-    submit acmeBank do create CashTransferRequest with
+    submit acmeBank do createCmd CashTransferRequest with
                               issuer = acmeBank
                               owner = acmeBank
                               newOwner = bob
@@ -128,30 +129,28 @@ main = scenario do
                               lockMaturity = None
 
   cashBob1Cid <-
-    submit bob do exercise cashBob1Cid Accept
+    submit bob do exerciseCmd cashBob1Cid Accept
 
   (cashAlice1Cid, cashAlice2Cid) <-
-    submit alice do exercise cashAlice1Cid Split with splitAmount = 30.0
+    submit alice do exerciseCmd cashAlice1Cid Split with splitAmount = 30.0
 
   cashBob2Cid <-
-    submit alice do exercise cashAlice1Cid Transfer with newOwner = bob
+    submit alice do exerciseCmd cashAlice1Cid Transfer with newOwner = bob
 
   cashBob2Cid <-
-    submit bob do exercise cashBob2Cid Accept
+    submit bob do exerciseCmd cashBob2Cid Accept
 
   cashBob2Cid <-
-    submit bob do exercise cashBob1Cid Merge with otherCid = cashBob2Cid
+    submit bob do exerciseCmd cashBob1Cid Merge with otherCid = cashBob2Cid
 
-  submit alice do
-    c <- fetch cashAlice2Cid
-    assertMsg "unexpected issuer" $ c.issuer == acmeBank
-    assertMsg "unexpected owner" $ c.owner == alice
-    assertMsg "unexpected currency" $ c.currency == "USD"
-    assertMsg "unexpected amount" $ c.amount == 70.0
+  Some c <- queryContractId alice cashAlice2Cid
+  assertMsg "unexpected issuer" $ c.issuer == acmeBank
+  assertMsg "unexpected owner" $ c.owner == alice
+  assertMsg "unexpected currency" $ c.currency == "USD"
+  assertMsg "unexpected amount" $ c.amount == 70.0
 
-  submit bob do
-    c <- fetch cashBob2Cid
-    assertMsg "unexpected issuer" $ c.issuer == acmeBank
-    assertMsg "unexpected owner" $ c.owner == bob
-    assertMsg "unexpected currency" $ c.currency == "USD"
-    assertMsg "unexpected amount" $ c.amount == 50.0
+  Some c <- queryContractId bob cashBob2Cid
+  assertMsg "unexpected issuer" $ c.issuer == acmeBank
+  assertMsg "unexpected owner" $ c.owner == bob
+  assertMsg "unexpected currency" $ c.currency == "USD"
+  assertMsg "unexpected amount" $ c.amount == 50.0

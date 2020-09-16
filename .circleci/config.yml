@@ -7,7 +7,7 @@ commands:
     description: "Install the DAML SDK"
     steps:
       - run:
-          command: curl https://get.daml.com | sh -s 1.2.0
+          command: curl https://get.daml.com | sh -s 1.5.0
 
 jobs:
   application:
@@ -64,7 +64,7 @@ jobs:
           path: ~/test-results
   integration-test:
     docker:
-      - image: digitalasset/daml-sdk:1.2.0
+      - image: digitalasset/daml-sdk:1.5.0
     steps:
       - checkout
       - run:

@@ -13,6 +13,8 @@ import DvpNotification hiding (Accept)
 import DvpNotification qualified
 
 import DA.Date
+import DA.Time
+import Daml.Script
 
 template DvpProposal
   with
@@ -86,7 +88,7 @@ template DvpAllocated
           assert $ cash.issuer == c.cashIssuer
           assert $ cash.currency == c.cashCurrency
           assert $ cash.owner == c.buyer
-          
+
           bondCid <- exercise bondCid Bond.Transfer with newOwner = c.buyer
           bondCid <- exercise bondCid Bond.Accept
           cashCid <- exercise cashCid Cash.Transfer with newOwner = c.seller
@@ -101,17 +103,17 @@ data SettleResult = SettleResult
     cashCid : CashId
     notificationCid : DvpNotificationId
 
-main = scenario do
-  now <- passToDate $ date 2018 May 14
+main = script do
+  now <- setTime (time (date 2018 May 14) 0 0 0)
 
    --2018-05-14T00:00Z
-  acmeBank <- getParty "AcmeBank"
-  alice <- getParty "Alice"
-  bob <- getParty "Bob"
+  acmeBank <- allocateParty "AcmeBank"
+  alice <- allocateParty "Alice"
+  bob <- allocateParty "Bob"
 
   cashAliceCid <-
     submit acmeBank do
-      create CashTransferRequest with
+      createCmd CashTransferRequest with
         issuer = acmeBank
         owner = acmeBank
         newOwner = alice
@@ -121,21 +123,23 @@ main = scenario do
         lockMaturity = None
 
   cashAliceCid <-
-    submit alice do exercise cashAliceCid Cash.Accept
+    submit alice do exerciseCmd cashAliceCid Cash.Accept
 
   bondBobCid <-
-    submit acmeBank do create BondTransferRequest with issuer = acmeBank
-                                                       owner = acmeBank
-                                                       newOwner = bob
-                                                       isin = "1234"
-                                                       amount = 100.0
+    submit acmeBank do
+      createCmd BondTransferRequest with
+        issuer = acmeBank
+        owner = acmeBank
+        newOwner = bob
+        isin = "1234"
+        amount = 100.0
 
   bondBobCid <-
-    submit bob do exercise bondBobCid Bond.Accept
+    submit bob do exerciseCmd bondBobCid Bond.Accept
 
   dvpProposalCid <-
     submit alice do
-      create DvpProposal with
+      createCmd DvpProposal with
         c = DvpTerms with
           buyer = alice
           seller = bob
@@ -149,28 +153,26 @@ main = scenario do
           dvpId = "abc"
 
 
-  dvpCid <- submit bob do exercise dvpProposalCid Accept
+  dvpCid <- submit bob do exerciseCmd dvpProposalCid Accept
 
-  passToDate $ date 2018 Aug 14
+  setTime (time (date 2018 Aug 14) 0 0 0)
 
   (dvpAllocatedCid, _) <-
-    submit alice do exercise dvpCid Allocate with cashCid = cashAliceCid
+    submit alice do exerciseCmd dvpCid Allocate with cashCid = cashAliceCid
 
   r <-
-    submit bob do exercise dvpAllocatedCid Settle with bondCid = bondBobCid
+    submit bob do exerciseCmd dvpAllocatedCid Settle with bondCid = bondBobCid
 
-  submit alice do exercise r.notificationCid DvpNotification.Accept
+  submit alice do exerciseCmd r.notificationCid DvpNotification.Accept
 
-  submit alice do
-    c <- fetch r.bondCid
-    assertMsg "unexpected issuer" $ c.issuer == acmeBank
-    assertMsg "unexpected owner" $ c.owner == alice
-    assertMsg "unexpected isin" $ c.isin == "1234"
-    assertMsg "unexpected amount" $ c.amount == 100.0
+  Some c <- queryContractId alice r.bondCid
+  assertMsg "unexpected issuer" $ c.issuer == acmeBank
+  assertMsg "unexpected owner" $ c.owner == alice
+  assertMsg "unexpected isin" $ c.isin == "1234"
+  assertMsg "unexpected amount" $ c.amount == 100.0
 
-  submit bob do
-    c <- fetch r.cashCid
-    assertMsg "unexpected issuer" $ c.issuer == acmeBank
-    assertMsg "unexpected owner" $ c.owner == bob
-    assertMsg "unexpected currency" $ c.currency == "USD"
-    assertMsg "unexpected amount" $ c.amount == 100.0
+  Some c <- queryContractId bob r.cashCid
+  assertMsg "unexpected issuer" $ c.issuer == acmeBank
+  assertMsg "unexpected owner" $ c.owner == bob
+  assertMsg "unexpected currency" $ c.currency == "USD"
+  assertMsg "unexpected amount" $ c.amount == 100.0

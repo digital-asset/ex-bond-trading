@@ -11,6 +11,8 @@ import DvpTerms
 
 import DA.Action
 import DA.Date
+import DA.Time
+import Daml.Script
 
 data AllocateCashResult = AllocateCashResult
   with
@@ -58,9 +60,8 @@ template SettlementProcessor
         do
           time <- getTime
 
-          someDate <- pure $ date 2018 May 14
-
-          let settleDvp (dvpAllocatedCid: DvpAllocatedId) (prev: SettlementResult) = do
+          let someDate = date 2018 May 14
+              settleDvp (dvpAllocatedCid: DvpAllocatedId) (prev: SettlementResult) = do
               dvpAllocated <- fetch dvpAllocatedCid
               assertMsg "settlement time is in the future" $ dvpAllocated.c.settleTime <= time
               assertMsg "party isn't seller" $ dvpAllocated.c.seller == party
@@ -72,15 +73,15 @@ template SettlementProcessor
           bondCid <- foldl1A (\cid otherCid -> exercise cid Bond.Merge with otherCid) bondCids
           foldrA settleDvp (SettlementResult with restCid = Some bondCid; settleResults = []) dvpAllocatedCids
 
-main = scenario do
-  acmeBank <- getParty "Acme Bank"
-  alice <- getParty "Alice"
-  bob <- getParty "Bob"
+main = script do
+  acmeBank <- allocateParty "Acme Bank"
+  alice <- allocateParty "Alice"
+  bob <- allocateParty "Bob"
 
-  now <- passToDate $ date 2018 May 14
+  now <- setTime (time (date 2018 May 14) 0 0 0)
 
   cashAlice1Cid <- submit acmeBank do
-    create CashTransferRequest with
+    createCmd CashTransferRequest with
       issuer = acmeBank
       owner = acmeBank
       newOwner = alice
@@ -90,7 +91,7 @@ main = scenario do
       lockMaturity = None
 
   cashAlice2Cid <- submit acmeBank do
-    create CashTransferRequest with
+    createCmd CashTransferRequest with
       issuer = acmeBank
       owner = acmeBank
       newOwner = alice
@@ -99,11 +100,11 @@ main = scenario do
       locker = acmeBank
       lockMaturity = None
 
-  cashAlice1Cid <- submit alice do exercise cashAlice1Cid Cash.Accept
-  cashAlice2Cid <- submit alice do exercise cashAlice2Cid Cash.Accept
+  cashAlice1Cid <- submit alice do exerciseCmd cashAlice1Cid Cash.Accept
+  cashAlice2Cid <- submit alice do exerciseCmd cashAlice2Cid Cash.Accept
 
   bondBob1Cid <- submit acmeBank do
-    create BondTransferRequest with
+    createCmd BondTransferRequest with
       issuer = acmeBank
       owner = acmeBank
       newOwner = bob
@@ -111,18 +112,18 @@ main = scenario do
       amount = 60.0
 
   bondBob2Cid <- submit acmeBank do
-    create BondTransferRequest with
+    createCmd BondTransferRequest with
       issuer = acmeBank
       owner = acmeBank
       newOwner = bob
       isin = "1234"
       amount = 40.0
 
-  bondBob1Cid <- submit bob do exercise bondBob1Cid Bond.Accept
-  bondBob2Cid <- submit bob do exercise bondBob2Cid Bond.Accept
+  bondBob1Cid <- submit bob do exerciseCmd bondBob1Cid Bond.Accept
+  bondBob2Cid <- submit bob do exerciseCmd bondBob2Cid Bond.Accept
 
   dvp1Cid <- submit alice do
-    create DvpProposal with
+    createCmd DvpProposal with
       c = DvpTerms with
         buyer = alice
         seller = bob
@@ -136,7 +137,7 @@ main = scenario do
         dvpId = "abc"
 
   dvp2Cid <- submit alice do
-    create DvpProposal with
+    createCmd DvpProposal with
       c = DvpTerms with
         buyer = alice
         seller = bob
@@ -149,60 +150,56 @@ main = scenario do
         settleTime = datetime 2018 May 16 0 0 0
         dvpId = "abc"
 
-  dvp1Cid <- submit bob do exercise dvp1Cid Dvp.Accept
-  dvp2Cid <- submit bob do exercise dvp2Cid Dvp.Accept
+  dvp1Cid <- submit bob do exerciseCmd dvp1Cid Dvp.Accept
+  dvp2Cid <- submit bob do exerciseCmd dvp2Cid Dvp.Accept
 
-  processorAliceCid <- submit alice do create SettlementProcessor with party = alice
-  processorBobCid <- submit bob do create SettlementProcessor with party = bob
+  processorAliceCid <- submit alice do createCmd SettlementProcessor with party = alice
+  processorBobCid <- submit bob do createCmd SettlementProcessor with party = bob
 
-  passToDate $ date 2018 May 16
+  setTime (time (date 2018 May 16) 0 0 0)
 
   r <- submit alice do
-      exercise processorAliceCid AllocateCash with
+      exerciseCmd processorAliceCid AllocateCash with
           cashCids = [ cashAlice1Cid, cashAlice2Cid ]
           dvpCids = [ dvp1Cid, dvp2Cid ]
 
-  submit alice do
-      c <- optional (fail "unexpected rest") fetch r.restCid
-      assert $ c.issuer == acmeBank
-      assert $ c.owner == alice
-      assert $ c.currency == "USD"
-      assert $ c.amount == 30.0
+  Some c <- optional (fail "unexpected rest") (queryContractId alice) r.restCid
+  assert $ c.issuer == acmeBank
+  assert $ c.owner == alice
+  assert $ c.currency == "USD"
+  assert $ c.amount == 30.0
 
   r <- submit bob do
-      exercise processorBobCid SettleMany with
+      exerciseCmd processorBobCid SettleMany with
           bondCids = [ bondBob1Cid, bondBob2Cid ]
           dvpAllocatedCids = r.dvpAllocatedCids
 
-  submit bob do
-    c <- optional (fail "unexpected rest") fetch r.restCid
-    assert $ c.issuer == acmeBank
-    assert $ c.owner == bob
-    assert $ c.isin == "1234"
-    assert $ c.amount == 30.0
+  Some c <- optional (fail "unexpected rest") (queryContractId bob) r.restCid
+  assert $ c.issuer == acmeBank
+  assert $ c.owner == bob
+  assert $ c.isin == "1234"
+  assert $ c.amount == 30.0
 
   let settleResults = r.settleResults
 
   r <- submit alice do
-      exercise processorAliceCid SettleMany with
+      exerciseCmd processorAliceCid SettleMany with
         bondCids = map (\r -> r.bondCid) settleResults
         dvpAllocatedCids = []
 
-  submit alice do
-    c <- optional (fail "unexpected rest") fetch r.restCid
-    assert $ c.issuer == acmeBank
-    assert $ c.owner == alice
-    assert $ c.isin == "1234"
-    assert $ c.amount == 70.0
+  Some c <- optional (fail "unexpected rest") (queryContractId alice) r.restCid
+  assert $ c.issuer == acmeBank
+  assert $ c.owner == alice
+  assert $ c.isin == "1234"
+  assert $ c.amount == 70.0
 
   r <- submit bob do
-      exercise processorBobCid AllocateCash with
+      exerciseCmd processorBobCid AllocateCash with
         cashCids = map (\r -> r.cashCid) settleResults
         dvpCids = []
 
-  submit bob do
-    c <- optional (fail "unexpected rest") fetch r.restCid
-    assert $ c.issuer == acmeBank
-    assert $ c.owner == bob
-    assert $ c.currency == "USD"
-    assert $ c.amount == 70.0
+  Some c <- optional (fail "unexpected rest") (queryContractId bob) r.restCid
+  assert $ c.issuer == acmeBank
+  assert $ c.owner == bob
+  assert $ c.currency == "USD"
+  assert $ c.amount == 70.0
