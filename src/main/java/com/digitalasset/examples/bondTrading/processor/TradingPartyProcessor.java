@@ -7,7 +7,6 @@ import com.digitalasset.examples.bondTrading.BondTradingMain;
 import com.daml.ledger.api.v1.CommandsOuterClass.Command;
 import com.daml.ledger.api.v1.EventOuterClass.CreatedEvent;
 import com.daml.ledger.api.v1.EventOuterClass.ArchivedEvent;
-import com.daml.ledger.api.v1.EventOuterClass.ExercisedEvent;
 import com.daml.ledger.api.v1.ValueOuterClass;
 import com.daml.ledger.api.v1.ValueOuterClass.Value;
 import com.daml.ledger.api.v1.ValueOuterClass.Record;
@@ -21,8 +20,6 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

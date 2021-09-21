@@ -28,15 +28,12 @@ import com.daml.ledger.api.v1.ValueOuterClass.Record;
 import com.daml.ledger.api.v1.ValueOuterClass.Value;
 
 
-import com.google.protobuf.Empty;
-import com.google.protobuf.Timestamp;
 import com.google.rpc.Status;
 import io.grpc.ManagedChannel;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
