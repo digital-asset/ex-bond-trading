@@ -1,7 +1,6 @@
 -- Copyright (c) 2019, Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
 -- SPDX-License-Identifier: Apache-2.0
 
-daml 1.2
 module Test where
 
 import Bond qualified
@@ -9,6 +8,7 @@ import Cash qualified
 import Dvp qualified
 import Settlement qualified
 import Setup qualified
+import Daml.Script
 
 main = script do
   Bond.main

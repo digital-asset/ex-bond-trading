@@ -10,14 +10,6 @@ import com.daml.ledger.api.v1.LedgerIdentityServiceGrpc;
 import com.daml.ledger.api.v1.LedgerIdentityServiceGrpc.LedgerIdentityServiceBlockingStub;
 import com.daml.ledger.api.v1.LedgerIdentityServiceOuterClass.GetLedgerIdentityRequest;
 import com.daml.ledger.api.v1.LedgerIdentityServiceOuterClass.GetLedgerIdentityResponse;
-import com.daml.ledger.api.v1.PackageServiceGrpc;
-import com.daml.ledger.api.v1.PackageServiceGrpc.PackageServiceBlockingStub;
-import com.daml.ledger.api.v1.PackageServiceOuterClass.GetPackageRequest;
-import com.daml.ledger.api.v1.PackageServiceOuterClass.GetPackageResponse;
-import com.daml.ledger.api.v1.PackageServiceOuterClass.ListPackagesRequest;
-import com.daml.ledger.api.v1.PackageServiceOuterClass.ListPackagesResponse;
-
-import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -31,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /*
  * The main class of all bond trading bots. The single class accepts a command string as the first argument, and
